@@ -26,3 +26,7 @@ dist/
 *.sln
 *.sw?
 *.env
+
+.env
+.env.local
+.env.*.local
