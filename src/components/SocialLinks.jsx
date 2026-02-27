@@ -16,7 +16,7 @@ const socialLinks = [
     displayName: "Let's Connect",
     subText: "on LinkedIn",
     icon: Linkedin,
-    url: "https://www.linkedin.com/in/ekizr/",
+    url: "https://www.linkedin.com/in/billy-wicaksono-315898372",
     color: "#0A66C2",
     gradient: "from-[#0A66C2] to-[#0077B5]",
     isPrimary: true,
@@ -24,34 +24,34 @@ const socialLinks = [
   {
     name: "Instagram",
     displayName: "Instagram",
-    subText: "@ekizr_",
+    subText: "@billy.w.2005",
     icon: Instagram,
-    url: "https://www.instagram.com/ekizr_/?hl=id",
+    url: "https://www.instagram.com/billy.w.2005?igsh=NmJsaGJpenZrYm05&utm_source=qr",
     color: "#E4405F",
     gradient: "from-[#833AB4] via-[#E4405F] to-[#FCAF45]",
   },
   {
     name: "YouTube",
     displayName: "Youtube",
-    subText: "@eki zulfar",
+    subText: "@billywicaksono",
     icon: Youtube,
-    url: "https://www.youtube.com/@eki_zulfar",
+    url: "https://www.youtube.com/", // Ganti link ini kalau kamu sudah punya channel YouTube
     color: "#FF0000",
     gradient: "from-[#FF0000] to-[#CC0000]",
   },
   {
     name: "GitHub",
     displayName: "Github",
-    subText: "@EkiZR",
+    subText: "@bilker29",
     icon: Github,
-    url: "https://github.com/EkiZR",
+    url: "https://github.com/bilker29",
     color: "#ffffff",
     gradient: "from-[#333] to-[#24292e]",
   },
   {
     name: "TikTok",
     displayName: "Tiktok",
-    subText: "@eki_zulfar",
+    subText: "@gemers2905",
     icon: ({ className, ...props }) => (
       <svg
         width="24px"
@@ -89,7 +89,7 @@ const socialLinks = [
         </g>
       </svg>
     ),
-    url: "https://tiktok.com/@eki_zulfar",
+    url: "https://www.tiktok.com/@gemers2905?_r=1&_t=ZS-94DfruR8pPA",
     color: "black",
     gradient: "from-[#000000] via-[#25F4EE] to-[#FE2C55]",
   },
@@ -103,7 +103,6 @@ const SocialLinks = () => {
   useEffect(() => {
     AOS.init({
       offset: 10,
-     
     });
   }, []);
 
@@ -111,7 +110,7 @@ const SocialLinks = () => {
     <div className="w-full bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-6 py-8 backdrop-blur-xl">
       <h3
         className="text-xl font-semibold text-white mb-6 flex items-center gap-2"
-        data-aos="fade-down" 
+        data-aos="fade-down"
       >
         <span className="inline-block w-8 h-1 bg-indigo-500 rounded-full"></span>
         Connect With Me
@@ -124,10 +123,10 @@ const SocialLinks = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="group relative flex items-center justify-between p-4 rounded-lg 
-                     bg-white/5 border border-white/10 overflow-hidden
-                     hover:border-white/20 transition-all duration-500"
+                      bg-white/5 border border-white/10 overflow-hidden
+                      hover:border-white/20 transition-all duration-500"
           data-aos="fade-up"
-          data-aos-delay="100" 
+          data-aos-delay="100"
         >
           {/* Hover Gradient Background */}
           <div
@@ -190,8 +189,8 @@ const SocialLinks = () => {
               className="group relative flex items-center gap-3 p-4 rounded-xl 
                                bg-white/5 border border-white/10 overflow-hidden
                                hover:border-white/20 transition-all duration-500"
-              data-aos="fade-up" 
-              data-aos-delay={200 + index * 100} 
+              data-aos="fade-up"
+              data-aos-delay={200 + index * 100}
             >
               <div
                 className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500
@@ -249,7 +248,7 @@ const SocialLinks = () => {
               className="group relative flex items-center gap-3 p-4 rounded-xl 
                                bg-white/5 border border-white/10 overflow-hidden
                                hover:border-white/20 transition-all duration-500"
-              data-aos="fade-up" 
+              data-aos="fade-up"
               data-aos-delay={400 + index * 100}
             >
               <div
@@ -296,7 +295,6 @@ const SocialLinks = () => {
             </a>
           ))}
         </div>
-  
       </div>
     </div>
   );
