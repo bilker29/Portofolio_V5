@@ -44,8 +44,8 @@ const ContactPage = () => {
     });
 
     try {
-      // Ganti dengan email Anda di FormSubmit
-      const formSubmitUrl = 'https://formsubmit.co/ekizulfarrachman@gmail.com';
+      // 👇 LINK RAHASIA FORMSUBMIT KAMU SUDAH DIPASANG DI SINI 👇
+      const formSubmitUrl = 'https://formsubmit.co/billywicaksono.999@gmail.com';
       
       // Siapkan data form untuk FormSubmit
       const submitData = new FormData();
@@ -62,7 +62,6 @@ const ContactPage = () => {
         },
       });
 
-     
       Swal.fire({
         title: 'Berhasil!',
         text: 'Pesan Anda telah berhasil terkirim!',

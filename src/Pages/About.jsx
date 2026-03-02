@@ -118,7 +118,8 @@ const AboutPage = () => {
     const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
     const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
     
-    const startDate = new Date("2021-11-06");
+    // Kamu bisa ganti tahun "2023-01-01" di bawah ini sesuai dengan kapan kamu mulai belajar IT
+    const startDate = new Date("2023-01-01");
     const today = new Date();
     const experience = today.getFullYear() - startDate.getFullYear() -
       (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
@@ -209,7 +210,7 @@ const AboutPage = () => {
                 data-aos-duration="1300"
                 itemProp="name"
               >
-                Eki Zulfar Rachman
+                Billy Wicaksono
               </span>
             </h2>
             
@@ -218,9 +219,8 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-        Saya adalah mahasiswa Teknik Informatika yang berfokus pada pengembangan Front-End. 
-Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupaya memberikan solusi terbaik dalam setiap proyek yang saya kerjakan.
-                  </p>
+              Saya adalah mahasiswa Teknik Informatika Universitas Pasundan yang sangat antusias dalam mengeksplorasi dunia Software Engineering, Cyber Security, dan Jaringan Komputer. Di samping passion saya di bidang teknologi, saya juga aktif sebagai atlet Karate tingkat nasional dan pemain voli. Saya percaya bahwa kedisiplinan dari olahraga sangat membantu saya dalam memecahkan masalah-masalah IT yang kompleks.
+            </p>
 
                {/* Quote Section */}
       <div 
@@ -245,7 +245,8 @@ Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupay
       </div>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://drive.google.com/drive/folders/1BOm51Grsabb3zj6Xk27K-iRwI1zITcpo" className="w-full lg:w-auto">
+              {/* BAGIAN DOWNLOAD CV YANG DIPERBARUI */}
+              <a href="/CV_Billy_Wicaksono.pdf" download="CV_Billy_Wicaksono.pdf" target="_blank" rel="noopener noreferrer" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
                 data-aos-duration="800"
@@ -254,6 +255,7 @@ Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupay
                 <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
               </button>
               </a>
+              
               <a href="#Portofolio" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
