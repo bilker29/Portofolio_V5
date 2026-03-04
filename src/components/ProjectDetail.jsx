@@ -137,7 +137,7 @@ const ProjectDetails = () => {
         ...selectedProject,
         Features: selectedProject.Features || [],
         TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || "https://github.com/bilker29", // Diubah ke github kamu
+        Github: selectedProject.Github || "https://github.com/EkiZR",
       };
       setProject(enhancedProject);
     }
@@ -156,27 +156,25 @@ const ProjectDetails = () => {
     );
   }
 
-  // Diubah ke domain kamu
-  const projectUrl = `https://billywicaksono.com/project/${toSlug(project.Title)}`;
+  const projectUrl = `https://ekizr.com/project/${toSlug(project.Title)}`;
 
   return (
     <>
       <Helmet>
-        {/* Diubah ke nama kamu */}
-        <title>{project.Title} — Billy Wicaksono</title>
+        <title>{project.Title} — Eki Zulfar Rachman</title>
         <meta
           name="description"
           content={
             project.Description
               ? project.Description.slice(0, 155)
-              : `Project ${project.Title} oleh Billy Wicaksono — Informatics Engineering Student & IT Enthusiast.`
+              : `Project ${project.Title} oleh Eki Zulfar Rachman — Frontend Web Developer.`
           }
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={projectUrl} />
         <meta
           property="og:title"
-          content={`${project.Title} — Billy Wicaksono`}
+          content={`${project.Title} — Eki Zulfar Rachman`}
         />
         <meta
           property="og:description"
@@ -194,8 +192,8 @@ const ProjectDetails = () => {
             "url": "${projectUrl}",
             "author": {
               "@type": "Person",
-              "name": "Billy Wicaksono",
-              "url": "https://billywicaksono.com"
+              "name": "Eki Zulfar Rachman",
+              "url": "https://ekizr.com"
             }
           }
         `}</script>
