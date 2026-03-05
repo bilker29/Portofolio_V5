@@ -1,3 +1,5 @@
+import React from "react";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -7,7 +9,8 @@ const Footer = () => {
         <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
         <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
           © {currentYear}{" "}
-          <a href="https://billywicaksono.com" className="hover:underline">
+          {/* href diubah menjadi "/" agar kembali ke bagian paling atas / Home */}
+          <a href="/" className="hover:underline">
             BilKer™
           </a>
           . All Rights Reserved.
