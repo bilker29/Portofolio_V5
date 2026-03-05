@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from "../../supabase";
+import Swal from 'sweetalert2';
 import { Award, Upload, Trash2, ImageIcon, Plus } from 'lucide-react'
 
 const Card = ({ children, className = '' }) => (
@@ -60,10 +61,35 @@ export default function Certificates() {
   const [dragOver, setDragOver] = useState(false)
   const [loading, setLoading] = useState(true)
 
+  // Kustomisasi SweetAlert agar sesuai tema
+  const showToast = (title, text, icon) => {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      background: '#030014',
+      color: '#ffffff',
+      confirmButtonColor: '#6366f1',
+      customClass: {
+        popup: 'border border-white/10 rounded-2xl backdrop-blur-xl',
+      }
+    });
+  };
+
   const fetchCerts = async () => {
     setLoading(true)
-    const { data } = await supabase.from('certificates').select('*').order('created_at', { ascending: false })
-    setCerts(data || [])
+    const { data, error } = await supabase.from('certificates').select('*').order('created_at', { ascending: false })
+    if (error) {
+        console.error("Error fetching certificates:", error);
+    }
+    
+    const formattedData = (data || []).map(item => ({
+      id: item.id,
+      Img: item.img || item.Img, 
+      created_at: item.created_at
+    }));
+
+    setCerts(formattedData)
     setLoading(false)
   }
 
@@ -77,19 +103,68 @@ export default function Certificates() {
 
   const uploadImage = async () => {
     if (!file) return
-    setUploading(true)
-    const fileName = `cert-${Date.now()}-${file.name}`
-    await supabase.storage.from('certificate-images').upload(fileName, file)
-    const { data } = supabase.storage.from('certificate-images').getPublicUrl(fileName)
-    await supabase.from('certificates').insert({ Img: data.publicUrl })
-    setFile(null); setPreview(null); setUploading(false)
-    fetchCerts()
+    try {
+      setUploading(true)
+      const fileName = `cert-${Date.now()}-${file.name}`
+      
+      const { error: uploadError } = await supabase.storage.from('certificate-images').upload(fileName, file)
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('certificate-images').getPublicUrl(fileName)
+      
+      const { error: dbError } = await supabase.from('certificates').insert({ img: data.publicUrl })
+      if (dbError) throw dbError; 
+
+      setFile(null); 
+      setPreview(null); 
+      fetchCerts();
+      showToast("Uploaded!", "Certificate uploaded successfully.", "success");
+    } catch (err) {
+      showToast("Error", `Gagal mengupload sertifikat: ${err.message}`, "error");
+      console.error("Upload Error:", err);
+    } finally {
+      setUploading(false)
+    }
   }
 
   const deleteCert = async (id) => {
-    if (!confirm('Delete this certificate?')) return
-    await supabase.from('certificates').delete().eq('id', id)
-    fetchCerts()
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this certificate!",
+      icon: "warning",
+      showCancelButton: true,
+      background: '#030014',
+      color: '#ffffff',
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#3b82f6',
+      confirmButtonText: "Yes, delete it!",
+      customClass: {
+        popup: 'border border-white/10 rounded-2xl',
+      }
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+        const { error } = await supabase.from('certificates').delete().eq('id', id)
+        if (error) throw error;
+        fetchCerts();
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your certificate has been deleted.",
+          icon: "success",
+          background: '#030014',
+          color: '#ffffff',
+          confirmButtonColor: '#6366f1',
+          customClass: {
+            popup: 'border border-white/10 rounded-2xl',
+          }
+        });
+    } catch (err) {
+        showToast("Error", `Gagal menghapus sertifikat: ${err.message}`, "error");
+        console.error("Delete Error:", err);
+    }
   }
 
   return (

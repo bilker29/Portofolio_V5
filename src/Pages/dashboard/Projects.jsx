@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase";
+import Swal from "sweetalert2";
 import {
   Plus,
   Trash2,
@@ -338,13 +339,45 @@ export default function Projects() {
   const [editProject, setEditProject] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  // Kustomisasi SweetAlert agar sesuai tema
+  const showToast = (title, text, icon) => {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      background: '#030014',
+      color: '#ffffff',
+      confirmButtonColor: '#6366f1',
+      customClass: {
+        popup: 'border border-white/10 rounded-2xl backdrop-blur-xl',
+      }
+    });
+  };
+
   const fetchProjects = async () => {
     setLoading(true);
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("projects")
       .select("*")
       .order("created_at", { ascending: false });
-    setProjects(data || []);
+    
+    if (error) {
+      console.error("Error fetching projects:", error);
+    }
+    
+    const formattedData = (data || []).map(item => ({
+      id: item.id,
+      Title: item.title || item.Title,
+      Description: item.description || item.Description,
+      Img: item.img || item.Img,
+      TechStack: item.tech_stack || item.techstack || item.TechStack,
+      Features: item.features || item.Features,
+      Link: item.link || item.Link,
+      Github: item.github || item.Github,
+      created_at: item.created_at
+    }));
+
+    setProjects(formattedData);
     setLoading(false);
   };
 
@@ -354,7 +387,10 @@ export default function Projects() {
 
   const uploadImage = async (f) => {
     const fileName = `${Date.now()}-${f.name}`;
-    await supabase.storage.from("project-images").upload(fileName, f);
+    const { error } = await supabase.storage.from("project-images").upload(fileName, f);
+    
+    if (error) throw error; 
+
     const { data } = supabase.storage
       .from("project-images")
       .getPublicUrl(fileName);
@@ -362,56 +398,118 @@ export default function Projects() {
   };
 
   const handleCreate = async (form, file) => {
-    setUploading(true);
-    let imgUrl = "";
-    if (file) imgUrl = await uploadImage(file);
-    await supabase.from("projects").insert({
-      Title: form.Title,
-      Description: form.Description,
-      Img: imgUrl,
-      TechStack: form.TechStack.split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
-      Features: form.Features.split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
-      Link: form.Link,
-      Github: form.Github,
-    });
-    setShowCreate(false);
-    setUploading(false);
-    fetchProjects();
+    try {
+      setUploading(true);
+      let imgUrl = "";
+      
+      if (file) {
+        imgUrl = await uploadImage(file);
+      }
+
+      const { error } = await supabase.from("projects").insert({
+        title: form.Title,
+        description: form.Description,
+        img: imgUrl,
+        tech_stack: form.TechStack.split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        features: form.Features.split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        link: form.Link,
+        github: form.Github,
+      });
+
+      if (error) throw error;
+
+      setShowCreate(false);
+      fetchProjects();
+      showToast("Success!", "Project successfully created.", "success");
+    } catch (err) {
+      showToast("Error", `Gagal menyimpan project: ${err.message}`, "error");
+      console.error("Create Error:", err);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleEdit = async (form, file) => {
-    setUploading(true);
-    let imgUrl = editProject.Img || "";
-    if (file) imgUrl = await uploadImage(file);
-    await supabase
-      .from("projects")
-      .update({
-        Title: form.Title,
-        Description: form.Description,
-        Img: imgUrl,
-        TechStack: form.TechStack.split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        Features: form.Features.split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        Link: form.Link,
-        Github: form.Github,
-      })
-      .eq("id", editProject.id);
-    setEditProject(null);
-    setUploading(false);
-    fetchProjects();
+    try {
+      setUploading(true);
+      let imgUrl = editProject.Img || "";
+      
+      if (file) {
+        imgUrl = await uploadImage(file);
+      }
+
+      const { error } = await supabase
+        .from("projects")
+        .update({
+          title: form.Title,
+          description: form.Description,
+          img: imgUrl,
+          tech_stack: form.TechStack.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          features: form.Features.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          link: form.Link,
+          github: form.Github,
+        })
+        .eq("id", editProject.id);
+
+      if (error) throw error; 
+
+      setEditProject(null);
+      fetchProjects();
+      showToast("Updated!", "Project successfully updated.", "success");
+    } catch (err) {
+      showToast("Error", `Gagal mengupdate project: ${err.message}`, "error");
+      console.error("Update Error:", err);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const deleteProject = async (id) => {
-    if (!confirm("Delete this project?")) return;
-    await supabase.from("projects").delete().eq("id", id);
-    fetchProjects();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this project!",
+      icon: "warning",
+      showCancelButton: true,
+      background: '#030014',
+      color: '#ffffff',
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#3b82f6',
+      confirmButtonText: "Yes, delete it!",
+      customClass: {
+        popup: 'border border-white/10 rounded-2xl',
+      }
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const { error } = await supabase.from("projects").delete().eq("id", id);
+      if (error) throw error;
+      fetchProjects();
+      
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your project has been deleted.",
+        icon: "success",
+        background: '#030014',
+        color: '#ffffff',
+        confirmButtonColor: '#6366f1',
+        customClass: {
+          popup: 'border border-white/10 rounded-2xl',
+        }
+      });
+    } catch (err) {
+      showToast("Error", `Gagal menghapus project: ${err.message}`, "error");
+      console.error("Delete Error:", err);
+    }
   };
 
   return (
