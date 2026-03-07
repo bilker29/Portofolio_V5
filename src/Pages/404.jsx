@@ -1,5 +1,5 @@
-import React from 'react';
-import { Home, ArrowLeft } from 'lucide-react';
+import React from "react";
+import { Home, ArrowLeft } from "lucide-react";
 
 export default function NotFoundPage() {
   const handleGoBack = () => {
@@ -8,7 +8,7 @@ export default function NotFoundPage() {
 
   const handleGoHome = () => {
     // In a real app, you would use your router's navigation
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   return (
@@ -28,7 +28,8 @@ export default function NotFoundPage() {
             Oops! Halaman Tidak Ditemukan
           </h2>
           <p className="text-lg text-gray-600 max-w-md mx-auto leading-relaxed">
-            Halaman yang Anda cari mungkin telah dipindahkan, dihapus, atau tidak pernah ada.
+            Halaman yang Anda cari mungkin telah dipindahkan, dihapus, atau
+            tidak pernah ada.
           </p>
         </div>
 
@@ -48,7 +49,7 @@ export default function NotFoundPage() {
             <ArrowLeft size={20} />
             Kembali
           </button>
-          
+
           <button
             onClick={handleGoHome}
             className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 shadow-md hover:shadow-lg"
@@ -57,9 +58,6 @@ export default function NotFoundPage() {
             Beranda
           </button>
         </div>
-
-       
-
       </div>
     </div>
   );

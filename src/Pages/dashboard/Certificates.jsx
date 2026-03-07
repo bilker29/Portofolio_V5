@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { supabase } from "../../supabase";
-import Swal from 'sweetalert2';
-import { Award, Upload, Trash2, ImageIcon, Plus } from 'lucide-react'
+import Swal from "sweetalert2";
+import { Award, Upload, Trash2, ImageIcon, Plus } from "lucide-react";
 
-const Card = ({ children, className = '' }) => (
+const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
     <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
     <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
       {children}
     </div>
   </div>
-)
+);
 
 const SkeletonCard = () => (
   <div className="relative">
@@ -19,10 +19,10 @@ const SkeletonCard = () => (
       <div className="w-full aspect-[16/11.5] bg-white/5 animate-pulse" />
     </div>
   </div>
-)
+);
 
 const CertCard = ({ cert, onDelete }) => {
-  const [imgLoaded, setImgLoaded] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
     <div className="relative group">
@@ -36,7 +36,7 @@ const CertCard = ({ cert, onDelete }) => {
           src={cert.Img}
           alt="Certificate"
           onLoad={() => setImgLoaded(true)}
-          className={`w-full aspect-[16/11.5] object-cover group-hover:scale-105 transition-transform duration-500 ${imgLoaded ? 'block' : 'hidden'}`}
+          className={`w-full aspect-[16/11.5] object-cover group-hover:scale-105 transition-transform duration-500 ${imgLoaded ? "block" : "hidden"}`}
         />
         {imgLoaded && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
@@ -50,16 +50,16 @@ const CertCard = ({ cert, onDelete }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default function Certificates() {
-  const [certs, setCerts] = useState([])
-  const [file, setFile] = useState(null)
-  const [preview, setPreview] = useState(null)
-  const [uploading, setUploading] = useState(false)
-  const [dragOver, setDragOver] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [certs, setCerts] = useState([]);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Kustomisasi SweetAlert agar sesuai tema
   const showToast = (title, text, icon) => {
@@ -67,65 +67,80 @@ export default function Certificates() {
       title: title,
       text: text,
       icon: icon,
-      background: '#030014',
-      color: '#ffffff',
-      confirmButtonColor: '#6366f1',
+      background: "#030014",
+      color: "#ffffff",
+      confirmButtonColor: "#6366f1",
       customClass: {
-        popup: 'border border-white/10 rounded-2xl backdrop-blur-xl',
-      }
+        popup: "border border-white/10 rounded-2xl backdrop-blur-xl",
+      },
     });
   };
 
   const fetchCerts = async () => {
-    setLoading(true)
-    const { data, error } = await supabase.from('certificates').select('*').order('created_at', { ascending: false })
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("certificates")
+      .select("*")
+      .order("created_at", { ascending: false });
     if (error) {
-        console.error("Error fetching certificates:", error);
+      console.error("Error fetching certificates:", error);
     }
-    
-    const formattedData = (data || []).map(item => ({
+
+    const formattedData = (data || []).map((item) => ({
       id: item.id,
-      Img: item.img || item.Img, 
-      created_at: item.created_at
+      Img: item.img || item.Img,
+      created_at: item.created_at,
     }));
 
-    setCerts(formattedData)
-    setLoading(false)
-  }
+    setCerts(formattedData);
+    setLoading(false);
+  };
 
-  useEffect(() => { fetchCerts() }, [])
+  useEffect(() => {
+    fetchCerts();
+  }, []);
 
   const handleFile = (f) => {
-    if (!f) return
-    setFile(f)
-    setPreview(URL.createObjectURL(f))
-  }
+    if (!f) return;
+    setFile(f);
+    setPreview(URL.createObjectURL(f));
+  };
 
   const uploadImage = async () => {
-    if (!file) return
+    if (!file) return;
     try {
-      setUploading(true)
-      const fileName = `cert-${Date.now()}-${file.name}`
-      
-      const { error: uploadError } = await supabase.storage.from('certificate-images').upload(fileName, file)
+      setUploading(true);
+      const fileName = `cert-${Date.now()}-${file.name}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("certificate-images")
+        .upload(fileName, file);
       if (uploadError) throw uploadError;
 
-      const { data } = supabase.storage.from('certificate-images').getPublicUrl(fileName)
-      
-      const { error: dbError } = await supabase.from('certificates').insert({ img: data.publicUrl })
-      if (dbError) throw dbError; 
+      const { data } = supabase.storage
+        .from("certificate-images")
+        .getPublicUrl(fileName);
 
-      setFile(null); 
-      setPreview(null); 
+      const { error: dbError } = await supabase
+        .from("certificates")
+        .insert({ img: data.publicUrl });
+      if (dbError) throw dbError;
+
+      setFile(null);
+      setPreview(null);
       fetchCerts();
       showToast("Uploaded!", "Certificate uploaded successfully.", "success");
     } catch (err) {
-      showToast("Error", `Gagal mengupload sertifikat: ${err.message}`, "error");
+      showToast(
+        "Error",
+        `Gagal mengupload sertifikat: ${err.message}`,
+        "error",
+      );
       console.error("Upload Error:", err);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const deleteCert = async (id) => {
     const result = await Swal.fire({
@@ -133,39 +148,42 @@ export default function Certificates() {
       text: "You won't be able to revert this certificate!",
       icon: "warning",
       showCancelButton: true,
-      background: '#030014',
-      color: '#ffffff',
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#3b82f6',
+      background: "#030014",
+      color: "#ffffff",
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#3b82f6",
       confirmButtonText: "Yes, delete it!",
       customClass: {
-        popup: 'border border-white/10 rounded-2xl',
-      }
+        popup: "border border-white/10 rounded-2xl",
+      },
     });
 
     if (!result.isConfirmed) return;
 
     try {
-        const { error } = await supabase.from('certificates').delete().eq('id', id)
-        if (error) throw error;
-        fetchCerts();
+      const { error } = await supabase
+        .from("certificates")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+      fetchCerts();
 
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your certificate has been deleted.",
-          icon: "success",
-          background: '#030014',
-          color: '#ffffff',
-          confirmButtonColor: '#6366f1',
-          customClass: {
-            popup: 'border border-white/10 rounded-2xl',
-          }
-        });
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your certificate has been deleted.",
+        icon: "success",
+        background: "#030014",
+        color: "#ffffff",
+        confirmButtonColor: "#6366f1",
+        customClass: {
+          popup: "border border-white/10 rounded-2xl",
+        },
+      });
     } catch (err) {
-        showToast("Error", `Gagal menghapus sertifikat: ${err.message}`, "error");
-        console.error("Delete Error:", err);
+      showToast("Error", `Gagal menghapus sertifikat: ${err.message}`, "error");
+      console.error("Delete Error:", err);
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -178,9 +196,11 @@ export default function Certificates() {
           </div>
         </div>
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Certificates</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
+            Certificates
+          </h1>
           <p className="text-gray-500 text-xs">
-            {loading ? 'Loading...' : `${certs.length} certificates total`}
+            {loading ? "Loading..." : `${certs.length} certificates total`}
           </p>
         </div>
       </div>
@@ -193,40 +213,79 @@ export default function Certificates() {
           </h2>
 
           <label
-            onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
             onDragLeave={() => setDragOver(false)}
-            onDrop={e => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files[0]) }}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              handleFile(e.dataTransfer.files[0]);
+            }}
             className={`flex flex-col items-center justify-center w-full min-h-[160px] rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ${
-              dragOver ? 'border-indigo-400/60 bg-indigo-500/10' : 'border-white/12 bg-white/4 hover:border-indigo-500/35 hover:bg-white/7'
+              dragOver
+                ? "border-indigo-400/60 bg-indigo-500/10"
+                : "border-white/12 bg-white/4 hover:border-indigo-500/35 hover:bg-white/7"
             }`}
           >
             {preview ? (
-              <img src={preview} alt="preview" className="max-h-40 object-contain rounded-lg p-2" />
+              <img
+                src={preview}
+                alt="preview"
+                className="max-h-40 object-contain rounded-lg p-2"
+              />
             ) : (
               <div className="text-center space-y-2 p-6">
                 <div className="w-11 h-11 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto">
                   <ImageIcon className="w-5 h-5 text-indigo-400" />
                 </div>
-                <p className="text-sm text-gray-300">Drag & drop or click to upload</p>
-                <p className="text-xs text-gray-600">PNG, JPG, WEBP supported</p>
+                <p className="text-sm text-gray-300">
+                  Drag & drop or click to upload
+                </p>
+                <p className="text-xs text-gray-600">
+                  PNG, JPG, WEBP supported
+                </p>
               </div>
             )}
-            <input type="file" accept="image/*" onChange={e => handleFile(e.target.files[0])} className="hidden" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFile(e.target.files[0])}
+              className="hidden"
+            />
           </label>
 
           {file && (
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <p className="text-xs text-gray-400 truncate flex-1">{file.name}</p>
+              <p className="text-xs text-gray-400 truncate flex-1">
+                {file.name}
+              </p>
               <div className="flex gap-2 shrink-0">
-                <button onClick={() => { setFile(null); setPreview(null) }}
-                  className="px-3 py-1.5 rounded-xl border border-white/10 text-gray-500 hover:text-white text-xs transition-colors">
+                <button
+                  onClick={() => {
+                    setFile(null);
+                    setPreview(null);
+                  }}
+                  className="px-3 py-1.5 rounded-xl border border-white/10 text-gray-500 hover:text-white text-xs transition-colors"
+                >
                   Clear
                 </button>
-                <button onClick={uploadImage} disabled={uploading} className="relative group/u">
+                <button
+                  onClick={uploadImage}
+                  disabled={uploading}
+                  className="relative group/u"
+                >
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-60 blur group-hover/u:opacity-100 transition duration-300" />
                   <div className="relative flex items-center gap-2 px-4 py-1.5 bg-[#030014] rounded-xl border border-white/10">
-                    {uploading ? <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Upload className="w-3.5 h-3.5 text-indigo-400" />}
-                    <span className="text-xs text-gray-200">{uploading ? 'Uploading...' : 'Upload'}</span>
+                    {uploading ? (
+                      <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <Upload className="w-3.5 h-3.5 text-indigo-400" />
+                    )}
+                    <span className="text-xs text-gray-200">
+                      {uploading ? "Uploading..." : "Upload"}
+                    </span>
                   </div>
                 </button>
               </div>
@@ -251,11 +310,11 @@ export default function Certificates() {
         </Card>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-          {certs.map(cert => (
+          {certs.map((cert) => (
             <CertCard key={cert.id} cert={cert} onDelete={deleteCert} />
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }

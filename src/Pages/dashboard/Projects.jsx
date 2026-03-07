@@ -345,12 +345,12 @@ export default function Projects() {
       title: title,
       text: text,
       icon: icon,
-      background: '#030014',
-      color: '#ffffff',
-      confirmButtonColor: '#6366f1',
+      background: "#030014",
+      color: "#ffffff",
+      confirmButtonColor: "#6366f1",
       customClass: {
-        popup: 'border border-white/10 rounded-2xl backdrop-blur-xl',
-      }
+        popup: "border border-white/10 rounded-2xl backdrop-blur-xl",
+      },
     });
   };
 
@@ -360,12 +360,12 @@ export default function Projects() {
       .from("projects")
       .select("*")
       .order("created_at", { ascending: false });
-    
+
     if (error) {
       console.error("Error fetching projects:", error);
     }
-    
-    const formattedData = (data || []).map(item => ({
+
+    const formattedData = (data || []).map((item) => ({
       id: item.id,
       Title: item.title || item.Title,
       Description: item.description || item.Description,
@@ -374,7 +374,7 @@ export default function Projects() {
       Features: item.features || item.Features,
       Link: item.link || item.Link,
       Github: item.github || item.Github,
-      created_at: item.created_at
+      created_at: item.created_at,
     }));
 
     setProjects(formattedData);
@@ -387,9 +387,11 @@ export default function Projects() {
 
   const uploadImage = async (f) => {
     const fileName = `${Date.now()}-${f.name}`;
-    const { error } = await supabase.storage.from("project-images").upload(fileName, f);
-    
-    if (error) throw error; 
+    const { error } = await supabase.storage
+      .from("project-images")
+      .upload(fileName, f);
+
+    if (error) throw error;
 
     const { data } = supabase.storage
       .from("project-images")
@@ -401,7 +403,7 @@ export default function Projects() {
     try {
       setUploading(true);
       let imgUrl = "";
-      
+
       if (file) {
         imgUrl = await uploadImage(file);
       }
@@ -437,7 +439,7 @@ export default function Projects() {
     try {
       setUploading(true);
       let imgUrl = editProject.Img || "";
-      
+
       if (file) {
         imgUrl = await uploadImage(file);
       }
@@ -459,7 +461,7 @@ export default function Projects() {
         })
         .eq("id", editProject.id);
 
-      if (error) throw error; 
+      if (error) throw error;
 
       setEditProject(null);
       fetchProjects();
@@ -478,14 +480,14 @@ export default function Projects() {
       text: "You won't be able to revert this project!",
       icon: "warning",
       showCancelButton: true,
-      background: '#030014',
-      color: '#ffffff',
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#3b82f6',
+      background: "#030014",
+      color: "#ffffff",
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#3b82f6",
       confirmButtonText: "Yes, delete it!",
       customClass: {
-        popup: 'border border-white/10 rounded-2xl',
-      }
+        popup: "border border-white/10 rounded-2xl",
+      },
     });
 
     if (!result.isConfirmed) return;
@@ -494,17 +496,17 @@ export default function Projects() {
       const { error } = await supabase.from("projects").delete().eq("id", id);
       if (error) throw error;
       fetchProjects();
-      
+
       Swal.fire({
         title: "Deleted!",
         text: "Your project has been deleted.",
         icon: "success",
-        background: '#030014',
-        color: '#ffffff',
-        confirmButtonColor: '#6366f1',
+        background: "#030014",
+        color: "#ffffff",
+        confirmButtonColor: "#6366f1",
         customClass: {
-          popup: 'border border-white/10 rounded-2xl',
-        }
+          popup: "border border-white/10 rounded-2xl",
+        },
       });
     } catch (err) {
       showToast("Error", `Gagal menghapus project: ${err.message}`, "error");
