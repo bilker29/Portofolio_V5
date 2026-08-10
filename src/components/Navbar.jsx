@@ -72,9 +72,9 @@ const Navbar = () => {
     <nav
       className={`fixed w-full top-0 z-50 transition-all duration-500 ${
         isOpen
-          ? "bg-[#030f1b]"
+          ? "bg-white/95 backdrop-blur-xl border-b border-sky-100 shadow-md"
           : scrolled
-            ? "bg-[#030f1b]/60 backdrop-blur-xl"
+            ? "bg-white/80 backdrop-blur-xl border-b border-sky-100/80 shadow-sm"
             : "bg-transparent"
       }`}
     >
@@ -85,7 +85,7 @@ const Navbar = () => {
             <a
               href="#Home"
               onClick={(e) => scrollToSection(e, "#Home")}
-              className="text-xl font-bold bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] bg-clip-text text-transparent"
+              className="text-xl font-bold bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent"
             >
               BilKer
             </a>
@@ -104,14 +104,14 @@ const Navbar = () => {
                   <span
                     className={`relative z-10 transition-colors duration-300 ${
                       activeSection === item.href.substring(1)
-                        ? "bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] bg-clip-text text-transparent font-semibold"
-                        : "text-sky-100/80 group-hover:text-white"
+                        ? "bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent font-semibold"
+                        : "text-slate-600 group-hover:text-sky-600"
                     }`}
                   >
                     {item.label}
                   </span>
                   <span
-                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#38bdf8] to-[#34d399] transform origin-left transition-transform duration-300 ${
+                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] transform origin-left transition-transform duration-300 ${
                       activeSection === item.href.substring(1)
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
@@ -126,7 +126,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`relative p-2 text-sky-100 hover:text-white transition-transform duration-300 ease-in-out transform ${
+              className={`relative p-2 text-slate-700 hover:text-sky-600 transition-transform duration-300 ease-in-out transform ${
                 isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
               }`}
             >
@@ -156,8 +156,8 @@ const Navbar = () => {
               onClick={(e) => scrollToSection(e, item.href)}
               className={`block px-4 py-3 text-lg font-medium transition-all duration-300 ease ${
                 activeSection === item.href.substring(1)
-                  ? "bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] bg-clip-text text-transparent font-semibold"
-                  : "text-sky-100 hover:text-white"
+                  ? "bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent font-semibold"
+                  : "text-slate-600 hover:text-sky-600"
               }`}
               style={{
                 transitionDelay: `${index * 100}ms`,

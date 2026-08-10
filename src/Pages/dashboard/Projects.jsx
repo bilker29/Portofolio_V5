@@ -15,11 +15,10 @@ import {
 
 const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
-    <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between overflow-hidden">
+    <div className="relative bg-white/90 border border-slate-200/90 rounded-2xl p-6 flex flex-col justify-between overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
       <div className="space-y-3">
-        <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
-          <FolderGit2 className="w-5 h-5 text-emerald-400" />
+        <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center">
+          <FolderGit2 className="w-5 h-5 text-emerald-600" />
         </div>
       </div>
       {children}
@@ -29,7 +28,7 @@ const Card = ({ children, className = "" }) => (
 
 const FormField = ({ label, children }) => (
   <div className="space-y-1.5">
-    <label className="text-xs text-emerald-300/70 uppercase tracking-wider font-medium">
+    <label className="text-xs text-slate-600 uppercase tracking-wider font-bold">
       {label}
     </label>
     {children}
@@ -39,7 +38,7 @@ const FormField = ({ label, children }) => (
 const Input = (props) => (
   <input
     {...props}
-    className="w-full bg-[#041724] border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-600 text-sm outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 placeholder-slate-400 text-sm outline-none focus:border-sky-500 focus:bg-white focus:ring-1 focus:ring-sky-500/20 transition-all font-medium"
   />
 );
 
@@ -155,26 +154,25 @@ const ProjectCard = ({ project, onDelete, onEdit }) => {
 const Modal = ({ title, onClose, children }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
     <div
-      className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+      className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
       onClick={onClose}
     />
     <div
       className="relative z-10 w-full max-w-2xl flex flex-col"
       style={{ maxHeight: "calc(100vh - 24px)" }}
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-20 pointer-events-none" />
-      <div className="relative bg-[#030f1b] border border-white/12 rounded-2xl flex flex-col overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/8 shrink-0">
-          <h2 className="text-base font-semibold text-white">{title}</h2>
+      <div className="relative bg-white border border-slate-200 shadow-2xl rounded-2xl flex flex-col overflow-hidden text-slate-800">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 shrink-0 bg-slate-50">
+          <h2 className="text-base font-bold text-slate-800">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 text-gray-500 hover:text-white transition-colors"
+            className="p-1 text-slate-400 hover:text-slate-600 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="overflow-y-auto flex-1">{children}</div>
+        <div className="overflow-y-auto flex-1 p-4 bg-white">{children}</div>
       </div>
     </div>
   </div>

@@ -44,26 +44,26 @@ const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 ">
+    <div className="fixed inset-0 bg-gradient-to-br from-sky-50 via-teal-50/40 to-emerald-50">
       <div className="absolute inset-0">
         <div
           ref={(ref) => (blobRefs.current[0] = ref)}
-          className="absolute top-0 -left-4 md:w-96 md:h-96 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 "
+          className="absolute top-0 -left-4 md:w-96 md:h-96 w-72 h-72 bg-sky-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-50 md:opacity-35"
         ></div>
         <div
           ref={(ref) => (blobRefs.current[1] = ref)}
-          className="absolute top-0 -right-4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 hidden sm:block"
+          className="absolute top-0 -right-4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-50 md:opacity-35 hidden sm:block"
         ></div>
         <div
           ref={(ref) => (blobRefs.current[2] = ref)}
-          className="absolute -bottom-8 left-[-40%] md:left-20 w-96 h-96 bg-sky-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 "
+          className="absolute -bottom-8 left-[-40%] md:left-20 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-50 md:opacity-35"
         ></div>
         <div
           ref={(ref) => (blobRefs.current[3] = ref)}
-          className="absolute -bottom-10 right-20 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 md:opacity-10 hidden sm:block"
+          className="absolute -bottom-10 right-20 w-96 h-96 bg-cyan-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-35 md:opacity-25 hidden sm:block"
         ></div>
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0284c712_1px,transparent_1px),linear-gradient(to_bottom,#0284c712_1px,transparent_1px)] bg-[size:24px_24px]"></div>
     </div>
   );
 };

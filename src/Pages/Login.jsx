@@ -39,21 +39,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-slate-50">
       <div className="w-full max-w-md">
         <div className="relative group">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-700" />
-          <div className="relative bg-white/5 backdrop-blur-xl border border-white/15 rounded-2xl p-8 space-y-7">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-700" />
+          <div className="relative bg-white/90 backdrop-blur-xl border border-slate-200 shadow-xl rounded-2xl p-8 space-y-7">
             {/* Header */}
             <div className="text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-300 text-xs font-medium">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="text-emerald-800 text-xs font-bold">
                   Admin Portal
                 </span>
               </div>
-              <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-              <p className="text-gray-400 text-sm">
+              <h1 className="text-3xl font-extrabold text-slate-800">Welcome Back</h1>
+              <p className="text-slate-500 text-sm font-medium">
                 Sign in to manage your portfolio
               </p>
             </div>
@@ -61,40 +61,40 @@ export default function Login() {
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs text-gray-400 uppercase tracking-wider">
+                <label className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
                   Email
                 </label>
-                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-emerald-500/60 transition-colors">
-                  <Mail className="w-4 h-4 text-gray-500 ml-4 shrink-0" />
+                <div className="flex items-center bg-slate-50 border border-slate-300 rounded-xl overflow-hidden focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20 transition-colors">
+                  <Mail className="w-4 h-4 text-slate-400 ml-4 shrink-0" />
                   <input
                     type="email"
                     placeholder="admin@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full bg-transparent px-3 py-3 text-gray-100 placeholder-gray-500 text-sm outline-none"
+                    className="w-full bg-transparent px-3 py-3 text-slate-800 placeholder-slate-400 text-sm outline-none font-medium"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs text-gray-400 uppercase tracking-wider">
+                <label className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
                   Password
                 </label>
-                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-emerald-500/60 transition-colors">
-                  <Lock className="w-4 h-4 text-gray-500 ml-4 shrink-0" />
+                <div className="flex items-center bg-slate-50 border border-slate-300 rounded-xl overflow-hidden focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20 transition-colors">
+                  <Lock className="w-4 h-4 text-slate-400 ml-4 shrink-0" />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full bg-transparent px-3 py-3 text-gray-100 placeholder-gray-500 text-sm outline-none"
+                    className="w-full bg-transparent px-3 py-3 text-slate-800 placeholder-slate-400 text-sm outline-none font-medium"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
-                    className="mr-4 shrink-0 text-gray-500 hover:text-gray-300 transition-colors"
+                    className="mr-4 shrink-0 text-slate-400 hover:text-slate-600 transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -110,14 +110,12 @@ export default function Login() {
                 disabled={loading}
                 className="relative group/btn w-full mt-1"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-70 blur group-hover/btn:opacity-100 transition duration-300" />
-                <div className="relative h-11 bg-[#030f1b] rounded-xl border border-white/10 flex items-center justify-center gap-2 overflow-hidden">
-                  <div className="absolute inset-0 scale-x-0 group-hover/btn:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#0284c7]/20 to-[#059669]/20" />
+                <div className="relative h-11 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-xl border border-sky-600 flex items-center justify-center gap-2 overflow-hidden shadow-md shadow-sky-500/20">
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      <span className="relative text-sm font-medium text-white">
+                      <span className="relative text-sm font-bold text-white">
                         Sign In
                       </span>
                       <LogIn className="relative w-4 h-4 text-white group-hover/btn:translate-x-1 transition-transform duration-300" />

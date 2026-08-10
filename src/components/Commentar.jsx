@@ -16,16 +16,16 @@ import { supabase } from "../supabase";
 
 const Comment = memo(({ comment, formatDate, index, isPinned = false }) => (
   <div
-    className={`px-4 pt-4 pb-2 rounded-xl border transition-all group hover:shadow-lg hover:-translate-y-0.5 ${
+    className={`px-4 pt-4 pb-2 rounded-xl border transition-all group hover:shadow-md hover:-translate-y-0.5 ${
       isPinned
-        ? "bg-gradient-to-r from-emerald-500/10 to-sky-500/10 border-emerald-500/30 hover:bg-gradient-to-r hover:from-emerald-500/15 hover:to-sky-500/15"
-        : "bg-white/5 border-white/10 hover:bg-white/10"
+        ? "bg-gradient-to-r from-emerald-50 to-sky-50 border-emerald-300 shadow-sm"
+        : "bg-slate-50/90 border-slate-200 hover:bg-white"
     }`}
   >
     {isPinned && (
-      <div className="flex items-center gap-2 mb-3 text-emerald-400">
+      <div className="flex items-center gap-2 mb-3 text-emerald-600">
         <Pin className="w-4 h-4" />
-        <span className="text-xs font-medium uppercase tracking-wide">
+        <span className="text-xs font-semibold uppercase tracking-wide">
           Pinned Comment
         </span>
       </div>
@@ -36,14 +36,14 @@ const Comment = memo(({ comment, formatDate, index, isPinned = false }) => (
           src={comment.profile_image}
           alt={`${comment.user_name}'s profile`}
           className={`w-10 h-10 rounded-full object-cover border-2 flex-shrink-0  ${
-            isPinned ? "border-emerald-500/50" : "border-emerald-500/30"
+            isPinned ? "border-emerald-400" : "border-slate-300"
           }`}
           loading="lazy"
         />
       ) : (
         <div
-          className={`p-2 rounded-full text-emerald-400 group-hover:bg-emerald-500/30 transition-colors ${
-            isPinned ? "bg-emerald-500/30" : "bg-emerald-500/20"
+          className={`p-2 rounded-full text-emerald-600 group-hover:bg-emerald-100 transition-colors ${
+            isPinned ? "bg-emerald-100" : "bg-slate-100"
           }`}
         >
           <UserCircle2 className="w-5 h-5" />
@@ -53,23 +53,23 @@ const Comment = memo(({ comment, formatDate, index, isPinned = false }) => (
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-2">
             <h4
-              className={`font-medium truncate ${
-                isPinned ? "text-emerald-200" : "text-white"
+              className={`font-bold truncate ${
+                isPinned ? "text-emerald-900" : "text-slate-800"
               }`}
             >
               {comment.user_name}
             </h4>
             {isPinned && (
-              <span className="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-300 rounded-full">
+              <span className="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-800 font-semibold rounded-full">
                 Admin
               </span>
             )}
           </div>
-          <span className="text-xs text-gray-400 whitespace-nowrap">
+          <span className="text-xs text-slate-400 whitespace-nowrap">
             {formatDate(comment.created_at)}
           </span>
         </div>
-        <p className="text-gray-300 text-sm break-words leading-relaxed relative bottom-2">
+        <p className="text-slate-600 text-sm break-words leading-relaxed relative bottom-2">
           {comment.content}
         </p>
       </div>
@@ -88,17 +88,14 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
   const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size (5MB limit)
       if (file.size > 5 * 1024 * 1024) {
         alert(
           "File size must be less than 5MB. Please choose a smaller image.",
         );
-        // Reset the input
         if (e.target) e.target.value = "";
         return;
       }
 
-      // Check file type
       if (!file.type.startsWith("image/")) {
         alert("Please select a valid image file.");
         if (e.target) e.target.value = "";
@@ -139,8 +136,8 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2" data-aos="fade-up" data-aos-duration="1000">
-        <label className="block text-sm font-medium text-white">
-          Name <span className="text-red-400">*</span>
+        <label className="block text-sm font-medium text-slate-700">
+          Name <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -148,14 +145,14 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
           onChange={(e) => setUserName(e.target.value)}
           maxLength={15}
           placeholder="Enter your name"
-          className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all"
+          className="w-full p-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-500/20 transition-all"
           required
         />
       </div>
 
       <div className="space-y-2" data-aos="fade-up" data-aos-duration="1200">
-        <label className="block text-sm font-medium text-white">
-          Message <span className="text-red-400">*</span>
+        <label className="block text-sm font-medium text-slate-700">
+          Message <span className="text-red-500">*</span>
         </label>
         <textarea
           ref={textareaRef}
@@ -163,16 +160,16 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
           maxLength={200}
           onChange={handleTextareaChange}
           placeholder="Write your message here..."
-          className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none min-h-[120px]"
+          className="w-full p-4 rounded-xl bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white focus:ring-2 focus:ring-sky-500/20 transition-all resize-none min-h-[120px]"
           required
         />
       </div>
 
       <div className="space-y-2" data-aos="fade-up" data-aos-duration="1400">
-        <label className="block text-sm font-medium text-white">
-          Profile Photo <span className="text-gray-400">(optional)</span>
+        <label className="block text-sm font-medium text-slate-700">
+          Profile Photo <span className="text-slate-400">(optional)</span>
         </label>
-        <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+        <div className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-300 rounded-xl">
           {imagePreview ? (
             <div className="flex items-center gap-4">
               <img
@@ -187,7 +184,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
                   setImageFile(null);
                   if (fileInputRef.current) fileInputRef.current.value = "";
                 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all group"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-all group"
               >
                 <X className="w-4 h-4" />
                 <span>Remove Photo</span>
@@ -205,12 +202,12 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-all border border-dashed border-emerald-500/50 hover:border-emerald-500 group"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-all border border-dashed border-emerald-300 hover:border-emerald-500 group font-medium"
               >
                 <ImagePlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span>Choose Profile Photo</span>
               </button>
-              <p className="text-center text-gray-400 text-sm mt-2">
+              <p className="text-center text-slate-400 text-sm mt-2">
                 Max file size: 5MB
               </p>
             </div>
@@ -223,7 +220,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
         disabled={isSubmitting}
         data-aos="fade-up"
         data-aos-duration="1000"
-        className="relative w-full h-12 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-xl font-medium text-white overflow-hidden group transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
+        className="relative w-full h-12 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-xl font-medium text-white overflow-hidden group transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-md shadow-sky-500/20"
       >
         <div className="absolute inset-0 bg-white/20 translate-y-12 group-hover:translate-y-0 transition-transform duration-300" />
         <div className="relative flex items-center justify-center gap-2">
@@ -403,28 +400,28 @@ const Komentar = () => {
 
   return (
     <div
-      className="w-full bg-gradient-to-b from-white/10 to-white/5 rounded-2xl  backdrop-blur-xl shadow-xl"
+      className="w-full bg-white/80 border border-slate-200 rounded-3xl backdrop-blur-xl shadow-xl"
       data-aos="fade-up"
       data-aos-duration="1000"
     >
       <div
-        className="p-6 border-b border-white/10"
+        className="p-6 border-b border-slate-200"
         data-aos="fade-down"
         data-aos-duration="800"
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-emerald-500/20">
-            <MessageCircle className="w-6 h-6 text-emerald-400" />
+          <div className="p-2 rounded-xl bg-emerald-100">
+            <MessageCircle className="w-6 h-6 text-emerald-600" />
           </div>
-          <h3 className="text-xl font-semibold text-white">
-            Comments <span className="text-emerald-400">({totalComments})</span>
+          <h3 className="text-xl font-bold text-slate-800">
+            Comments <span className="text-emerald-600">({totalComments})</span>
           </h3>
         </div>
       </div>
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 bg-white/80 border border-slate-200 shadow-xl rounded-b-3xl backdrop-blur-xl">
         {error && (
           <div
-            className="flex items-center gap-2 p-4 text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl"
+            className="flex items-center gap-2 p-4 text-red-600 bg-red-50 border border-red-200 rounded-xl"
             data-aos="fade-in"
           >
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
@@ -460,8 +457,8 @@ const Komentar = () => {
           {/* Regular Comments */}
           {comments.length === 0 && !pinnedComment ? (
             <div className="text-center py-8" data-aos="fade-in">
-              <UserCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3 opacity-50" />
-              <p className="text-gray-400">
+              <UserCircle2 className="w-12 h-12 text-emerald-500 mx-auto mb-3 opacity-50" />
+              <p className="text-slate-500">
                 No comments yet. Start the conversation!
               </p>
             </div>

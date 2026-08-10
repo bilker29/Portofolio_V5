@@ -20,23 +20,23 @@ const ToggleButton = ({ onClick, isShowingMore }) => (
     onClick={onClick}
     className="
       px-3 py-1.5
-      text-slate-300 
-      hover:text-white 
+      text-slate-700 
+      hover:text-sky-700 
       text-sm 
-      font-medium 
+      font-semibold 
       transition-all 
       duration-300 
       ease-in-out
       flex 
       items-center 
       gap-2
-      bg-white/5 
-      hover:bg-white/10
+      bg-white 
+      hover:bg-slate-50
       rounded-md
       border 
-      border-white/10
-      hover:border-white/20
-      backdrop-blur-sm
+      border-slate-200
+      hover:border-sky-300
+      shadow-sm
       group
       relative
       overflow-hidden
@@ -65,7 +65,7 @@ const ToggleButton = ({ onClick, isShowingMore }) => (
         ></polyline>
       </svg>
     </span>
-    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400/60 transition-all duration-300 group-hover:w-full"></span>
+    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
   </button>
 );
 
@@ -147,7 +147,6 @@ export default function FullWidthTabs() {
       const projectData = projectsResponse.data || [];
       const certificateData = certificatesResponse.data || [];
 
-      // MAPPING DATA: Menyelaraskan huruf kecil dari database menjadi huruf besar sesuai kebutuhan Card frontend
       const formattedProjects = projectData.map((item) => ({
         id: item.id,
         Title: item.title || item.Title,
@@ -210,7 +209,7 @@ export default function FullWidthTabs() {
 
   return (
     <div
-      className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030f1b] overflow-hidden"
+      className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-slate-50 overflow-hidden"
       id="Portofolio"
     >
       <div
@@ -218,12 +217,12 @@ export default function FullWidthTabs() {
         data-aos="fade-up"
         data-aos-duration="1000"
       >
-        <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399]">
+        <h2 className="inline-block text-3xl md:text-5xl font-extrabold text-center mx-auto text-transparent bg-clip-text">
           <span
             style={{
-              color: "#38bdf8",
+              color: "#0284c7",
               backgroundImage:
-                "linear-gradient(45deg, #38bdf8 10%, #34d399 93%)",
+                "linear-gradient(45deg, #0284c7 10%, #059669 93%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -232,7 +231,7 @@ export default function FullWidthTabs() {
             Portfolio Showcase
           </span>
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mt-2">
+        <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base mt-2 font-medium">
           Explore my journey through projects, certifications, and technical
           expertise. Each section represents a milestone in my continuous
           learning path.
@@ -244,11 +243,12 @@ export default function FullWidthTabs() {
           position="static"
           elevation={0}
           sx={{
-            bgcolor: "transparent",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            bgcolor: "white",
+            border: "1px solid rgba(226, 232, 240, 1)",
             borderRadius: "20px",
             position: "relative",
             overflow: "hidden",
+            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
             "&::before": {
               content: '""',
               position: "absolute",
@@ -257,7 +257,7 @@ export default function FullWidthTabs() {
               right: 0,
               bottom: 0,
               background:
-                "linear-gradient(180deg, rgba(56, 189, 248, 0.03) 0%, rgba(52, 211, 153, 0.03) 100%)",
+                "linear-gradient(180deg, rgba(240, 249, 255, 0.6) 0%, rgba(240, 253, 250, 0.6) 100%)",
               backdropFilter: "blur(10px)",
               zIndex: 0,
             },
@@ -274,8 +274,8 @@ export default function FullWidthTabs() {
               minHeight: "70px",
               "& .MuiTab-root": {
                 fontSize: { xs: "0.9rem", md: "1rem" },
-                fontWeight: "600",
-                color: "#94a3b8",
+                fontWeight: "700",
+                color: "#475569",
                 textTransform: "none",
                 transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 padding: "20px 0",
@@ -283,20 +283,20 @@ export default function FullWidthTabs() {
                 margin: "8px",
                 borderRadius: "12px",
                 "&:hover": {
-                  color: "#ffffff",
-                  backgroundColor: "rgba(56, 189, 248, 0.1)",
+                  color: "#0284c7",
+                  backgroundColor: "rgba(2, 132, 199, 0.08)",
                   transform: "translateY(-2px)",
                   "& .lucide": {
                     transform: "scale(1.1) rotate(5deg)",
                   },
                 },
                 "&.Mui-selected": {
-                  color: "#fff",
+                  color: "#0284c7",
                   background:
-                    "linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(52, 211, 153, 0.2))",
-                  boxShadow: "0 4px 15px -3px rgba(56, 189, 248, 0.25)",
+                    "linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(13, 148, 136, 0.12))",
+                  boxShadow: "0 2px 8px -1px rgba(2, 132, 199, 0.15)",
                   "& .lucide": {
-                    color: "#34d399",
+                    color: "#059669",
                   },
                 },
               },

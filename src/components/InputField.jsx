@@ -6,14 +6,14 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
   // Helper function to generate input classes dynamically
   const getInputClasses = (isTextArea = false) => {
     const baseClasses = `
-      w-full p-4 rounded-xl bg-white/10 text-white placeholder-transparent 
-      focus:outline-none focus:ring-2 focus:ring-[#38bdf8] focus:ring-offset-2 
-      focus:ring-offset-[#030f1b] transition-all duration-300 peer
+      w-full p-4 rounded-xl bg-white/90 text-slate-800 placeholder-slate-400 
+      focus:outline-none focus:ring-2 focus:ring-[#0284c7] focus:ring-offset-2 
+      focus:ring-offset-white transition-all duration-300 peer border border-slate-300
     `;
 
     const hoverFocusClasses = isFocused
-      ? "shadow-[0_4px_12px_rgba(56,189,248,0.4)] border-[#38bdf8]"
-      : "border-white/20 hover:border-[#38bdf8]";
+      ? "shadow-[0_4px_12px_rgba(2,132,199,0.15)] border-[#0284c7]"
+      : "border-slate-300 hover:border-[#0284c7]";
 
     return `${baseClasses} ${hoverFocusClasses} ${isTextArea ? "h-52 pt-12" : "pl-12"}`;
   };
@@ -55,15 +55,15 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
   return (
     <div className="relative w-full group">
       {/* Icon and Label */}
-      <div className="absolute left-4 top-4 flex items-center space-x-2 text-gray-400 transition-colors group-hover:text-[#38bdf8]">
+      <div className="absolute left-4 top-4 flex items-center space-x-2 text-slate-400 transition-colors group-hover:text-[#0284c7]">
         <Icon className="w-5 h-5" />
         <label
           htmlFor={field}
           className={`
-            absolute left-12 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm transition-all duration-300 
+            absolute left-12 top-1/2 transform -translate-y-1/2 text-slate-500 text-sm transition-all duration-300 
             peer-placeholder-shown:top-1/2 peer-placeholder-shown:translate-y-0 
-            peer-placeholder-shown:text-gray-500 peer-placeholder-shown:text-base 
-            peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-[#38bdf8] peer-focus:text-sm
+            peer-placeholder-shown:text-slate-400 peer-placeholder-shown:text-base 
+            peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-[#0284c7] peer-focus:text-sm
           `}
         >
           {label}
@@ -78,7 +78,7 @@ const InputField = ({ field, label, icon: Icon, formData, handleChange }) => {
         className={`
           absolute inset-0 border rounded-xl pointer-events-none 
           transition-all duration-300 
-          ${isFocused ? "border-[#38bdf8]" : "border-transparent"}
+          ${isFocused ? "border-[#0284c7]" : "border-transparent"}
         `}
       ></div>
     </div>

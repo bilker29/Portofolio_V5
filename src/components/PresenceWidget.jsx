@@ -177,10 +177,10 @@ export default function PresenceWidget() {
                       </span>
                     </div>
 
-                    <h3 className="text-white font-bold text-sm truncate mb-0.5">
+                    <h3 className="text-slate-800 font-bold text-sm truncate mb-0.5">
                       {act.title}
                     </h3>
-                    <p className="text-white/60 text-xs truncate">
+                    <p className="text-slate-600 text-xs truncate">
                       {act.subtitle}
                     </p>
                   </div>

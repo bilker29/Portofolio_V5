@@ -5,8 +5,7 @@ import { Award, Upload, Trash2, ImageIcon, Plus } from "lucide-react";
 
 const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
-    <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
+    <div className="relative bg-white/90 border border-slate-200/90 rounded-2xl h-full shadow-md">
       {children}
     </div>
   </div>
@@ -14,9 +13,8 @@ const Card = ({ children, className = "" }) => (
 
 const SkeletonCard = () => (
   <div className="relative">
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10" />
-    <div className="relative bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
-      <div className="w-full aspect-[16/11.5] bg-white/5 animate-pulse" />
+    <div className="relative bg-white/80 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+      <div className="w-full aspect-[16/11.5] bg-slate-100 animate-pulse" />
     </div>
   </div>
 );
@@ -26,11 +24,10 @@ const CertCard = ({ cert, onDelete }) => {
 
   return (
     <div className="relative group">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
-      <div className="relative bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
+      <div className="relative bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
         {/* Skeleton shown until image loads */}
         {!imgLoaded && (
-          <div className="w-full aspect-[16/11.5] bg-white/5 animate-pulse" />
+          <div className="w-full aspect-[16/11.5] bg-slate-100 animate-pulse" />
         )}
         <img
           src={cert.Img}
@@ -39,10 +36,10 @@ const CertCard = ({ cert, onDelete }) => {
           className={`w-full aspect-[16/11.5] object-cover group-hover:scale-105 transition-transform duration-500 ${imgLoaded ? "block" : "hidden"}`}
         />
         {imgLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
             <button
               onClick={() => onDelete(cert.id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 text-xs w-full justify-center hover:bg-red-500/30 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs w-full justify-center hover:bg-red-700 transition-colors font-bold shadow-md"
             >
               <Trash2 className="w-3 h-3" /> Delete
             </button>
@@ -67,11 +64,11 @@ export default function Certificates() {
       title: title,
       text: text,
       icon: icon,
-      background: "#030f1b",
-      color: "#ffffff",
-      confirmButtonColor: "#10b981",
+      background: "#ffffff",
+      color: "#0f172a",
+      confirmButtonColor: "#059669",
       customClass: {
-        popup: "border border-white/10 rounded-2xl backdrop-blur-xl",
+        popup: "border border-slate-200 rounded-2xl shadow-xl",
       },
     });
   };

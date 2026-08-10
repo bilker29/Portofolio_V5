@@ -41,29 +41,27 @@ export default function Dashboard() {
       {/* Logo */}
       <div className="flex items-center gap-3 px-1 shrink-0">
         <div className="relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-xl blur opacity-50" />
-          <div className="relative w-9 h-9 bg-[#030f1b] rounded-xl border border-white/15 flex items-center justify-center">
-            <LayoutDashboard className="w-4 h-4 text-emerald-400" />
+          <div className="relative w-9 h-9 bg-sky-50 rounded-xl border border-sky-200 flex items-center justify-center shadow-sm">
+            <LayoutDashboard className="w-4 h-4 text-sky-600" />
           </div>
         </div>
         <div>
-          {/* Bagian ini sudah disesuaikan dengan namamu */}
-          <p className="text-sm font-semibold text-white">Billy Wicaksono</p>
-          <p className="text-xs text-gray-500">Admin Dashboard</p>
+          <p className="text-sm font-bold text-slate-800">Billy Wicaksono</p>
+          <p className="text-xs text-slate-500 font-medium">Admin Dashboard</p>
         </div>
       </div>
 
       {/* Badge */}
-      <div className="shrink-0 px-3 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span className="text-emerald-300 text-xs font-medium">
+      <div className="shrink-0 px-3 py-2 rounded-full bg-emerald-50 border border-emerald-200 flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="text-emerald-800 text-xs font-bold">
           Portfolio Manager
         </span>
       </div>
 
       {/* Nav */}
       <nav className="flex flex-col gap-1 flex-1 min-h-0">
-        <p className="text-[10px] text-gray-600 uppercase tracking-widest px-3 mb-2 shrink-0">
+        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest px-3 mb-2 shrink-0">
           Menu
         </p>
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
@@ -73,18 +71,18 @@ export default function Dashboard() {
               key={to}
               to={to}
               onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium shrink-0 ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-semibold shrink-0 ${
                 active
-                  ? "bg-gradient-to-r from-sky-500/20 to-emerald-500/15 border border-emerald-500/30 text-white"
-                  : "text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent"
+                  ? "bg-gradient-to-r from-sky-100 to-emerald-100 border border-sky-200 text-sky-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent"
               }`}
             >
               <Icon
-                className={`w-4 h-4 shrink-0 ${active ? "text-emerald-400" : ""}`}
+                className={`w-4 h-4 shrink-0 ${active ? "text-sky-600" : ""}`}
               />
               {label}
               {active && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-emerald-500" />
               )}
             </Link>
           );
@@ -94,7 +92,7 @@ export default function Dashboard() {
       {/* Logout */}
       <button
         onClick={handleLogout}
-        className="shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:text-red-400 hover:bg-red-500/5 border border-transparent hover:border-red-500/15 transition-all duration-200 text-sm"
+        className="shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all duration-200 text-sm font-semibold"
       >
         <LogOut className="w-4 h-4 shrink-0" />
         Sign Out
@@ -103,19 +101,18 @@ export default function Dashboard() {
   );
 
   return (
-    // Kunci: TIDAK pakai overflow-hidden di sini supaya scrollbar main bisa diklik
-    <div className="flex text-white" style={{ height: "100dvh" }}>
+    <div className="flex text-slate-800 bg-slate-50" style={{ height: "100dvh" }}>
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black/60 lg:hidden"
+          className="fixed inset-0 z-20 bg-slate-900/40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar - desktop: sticky, tinggi 100dvh */}
       <aside
-        className="hidden lg:flex w-60 shrink-0 flex-col border-r border-white/8 bg-white/3 backdrop-blur-xl"
+        className="hidden lg:flex w-60 shrink-0 flex-col border-r border-slate-200 bg-white/90 backdrop-blur-xl"
         style={{ height: "100dvh", position: "sticky", top: 0 }}
       >
         <SidebarContent />
@@ -123,7 +120,7 @@ export default function Dashboard() {
 
       {/* Sidebar - mobile drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-white/8 bg-[#030f1b] backdrop-blur-xl transition-transform duration-300 lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-slate-200 bg-white backdrop-blur-xl transition-transform duration-300 lg:hidden ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -131,17 +128,16 @@ export default function Dashboard() {
       </aside>
 
       {/* Main area */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-0">
+      <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-slate-50">
         {/* Mobile topbar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-white/8 bg-white/3 backdrop-blur-xl shrink-0">
+        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-white/90 backdrop-blur-xl shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg border border-white/10 text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 transition-colors"
           >
             <Menu className="w-4 h-4" />
           </button>
-          {/* Judul di topbar mode HP sudah disesuaikan */}
-          <span className="text-sm font-medium text-white">
+          <span className="text-sm font-bold text-slate-800">
             Billy's Dashboard
           </span>
         </div>

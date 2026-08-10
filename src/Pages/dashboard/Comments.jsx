@@ -16,8 +16,7 @@ const PAGE_SIZE = 10;
 
 const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-20 transition duration-500 pointer-events-none" />
-    <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
+    <div className="relative bg-white/90 border border-slate-200/90 rounded-2xl h-full shadow-md text-slate-800 p-6">
       {children}
     </div>
   </div>

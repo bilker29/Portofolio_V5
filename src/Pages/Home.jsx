@@ -19,10 +19,10 @@ const StatusBadge = memo(() => (
     data-aos-delay="400"
   >
     <div className="relative group">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-      <div className="relative px-3 sm:px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10">
-        <span className="bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-medium flex items-center">
-          <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-sky-400" />
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+      <div className="relative px-3 sm:px-4 py-2 rounded-full bg-emerald-50/90 backdrop-blur-xl border border-emerald-200 shadow-sm">
+        <span className="bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-bold flex items-center">
+          <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-emerald-600" />
           Ready to Innovate
         </span>
       </div>
@@ -32,17 +32,15 @@ const StatusBadge = memo(() => (
 
 const MainTitle = memo(() => (
   <div className="space-y-2" data-aos="fade-up" data-aos-delay="600">
-    <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight">
+    <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight">
       <span className="relative inline-block">
-        <span className="absolute -inset-2 bg-gradient-to-r from-[#38bdf8] to-[#34d399] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-white via-sky-100 to-emerald-200 bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
           Billy
         </span>
       </span>
       <br />
       <span className="relative inline-block mt-2">
-        <span className="absolute -inset-2 bg-gradient-to-r from-[#38bdf8] to-[#34d399] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] bg-clip-text text-transparent">
+        <span className="relative bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent">
           Wicaksono
         </span>
       </span>
@@ -51,7 +49,7 @@ const MainTitle = memo(() => (
 ));
 
 const TechStack = memo(({ tech }) => (
-  <div className="px-4 py-2 hidden sm:block rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-sm text-gray-300 hover:bg-white/10 transition-colors">
+  <div className="px-4 py-2 hidden sm:block rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 text-sm font-medium text-slate-700 hover:bg-white hover:border-sky-300 shadow-sm transition-colors">
     {tech}
   </div>
 ));
@@ -59,15 +57,15 @@ const TechStack = memo(({ tech }) => (
 const CTAButton = memo(({ href, text, icon: Icon }) => (
   <a href={href}>
     <button className="group relative w-[160px]">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-50 blur-md group-hover:opacity-90 transition-all duration-700"></div>
-      <div className="relative h-11 bg-[#030f1b] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden">
-        <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#0284c7]/20 to-[#059669]/20"></div>
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-40 blur-sm group-hover:opacity-80 transition-all duration-500"></div>
+      <div className="relative h-11 bg-white backdrop-blur-xl rounded-lg border border-slate-200 leading-none overflow-hidden shadow-sm">
+        <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#0284c7]/10 to-[#059669]/10"></div>
         <span className="absolute inset-0 flex items-center justify-center gap-2 text-sm group-hover:gap-3 transition-all duration-300">
-          <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-medium z-10">
+          <span className="text-slate-800 font-bold z-10">
             {text}
           </span>
           <Icon
-            className={`w-4 h-4 text-gray-200 ${text === "Contact" ? "group-hover:translate-x-1" : "group-hover:rotate-45"} transform transition-all duration-300 z-10`}
+            className={`w-4 h-4 text-slate-700 ${text === "Contact" ? "group-hover:translate-x-1" : "group-hover:rotate-45"} transform transition-all duration-300 z-10`}
           />
         </span>
       </div>
@@ -78,9 +76,9 @@ const CTAButton = memo(({ href, text, icon: Icon }) => (
 const SocialLink = memo(({ icon: Icon, link, label }) => (
   <a href={link} target="_blank" rel="noopener noreferrer" aria-label={label}>
     <button className="group relative p-3" aria-label={label}>
-      <div className="absolute inset-0 bg-gradient-to-r from-[#38bdf8] to-[#34d399] rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-      <div className="relative rounded-xl bg-black/50 backdrop-blur-xl p-2 flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-all duration-300">
-        <Icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl blur opacity-15 group-hover:opacity-30 transition duration-300"></div>
+      <div className="relative rounded-xl bg-white/90 backdrop-blur-xl p-2 flex items-center justify-center border border-slate-200 group-hover:border-sky-300 shadow-sm transition-all duration-300">
+        <Icon className="w-5 h-5 text-slate-600 group-hover:text-sky-600 transition-colors" />
       </div>
     </button>
   </a>
@@ -206,7 +204,7 @@ const Home = () => {
       </Helmet>
 
       <div
-        className="min-h-screen bg-[#030f1b] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]"
+        className="min-h-screen bg-slate-50 overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]"
         id="Home"
       >
         <div
@@ -231,15 +229,15 @@ const Home = () => {
                     data-aos="fade-up"
                     data-aos-delay="800"
                   >
-                    <span className="text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light">
+                    <span className="text-xl md:text-2xl text-sky-700 font-semibold">
                       {text}
                     </span>
-                    <span className="w-[3px] h-6 bg-gradient-to-t from-[#38bdf8] to-[#34d399] ml-1 animate-blink"></span>
+                    <span className="w-[3px] h-6 bg-gradient-to-t from-[#0284c7] to-[#059669] ml-1 animate-blink"></span>
                   </div>
 
                   {/* Description */}
                   <p
-                    className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
+                    className="text-base md:text-lg text-slate-600 max-w-xl leading-relaxed font-normal"
                     data-aos="fade-up"
                     data-aos-delay="1000"
                   >
