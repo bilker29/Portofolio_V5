@@ -5,7 +5,7 @@ import { Award, Upload, Trash2, ImageIcon, Plus } from "lucide-react";
 
 const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
+    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
     <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
       {children}
     </div>
@@ -14,7 +14,7 @@ const Card = ({ children, className = "" }) => (
 
 const SkeletonCard = () => (
   <div className="relative">
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10" />
+    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10" />
     <div className="relative bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
       <div className="w-full aspect-[16/11.5] bg-white/5 animate-pulse" />
     </div>
@@ -26,7 +26,7 @@ const CertCard = ({ cert, onDelete }) => {
 
   return (
     <div className="relative group">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
       <div className="relative bg-white/5 border border-white/12 rounded-2xl overflow-hidden">
         {/* Skeleton shown until image loads */}
         {!imgLoaded && (
@@ -67,9 +67,9 @@ export default function Certificates() {
       title: title,
       text: text,
       icon: icon,
-      background: "#030014",
+      background: "#030f1b",
       color: "#ffffff",
-      confirmButtonColor: "#6366f1",
+      confirmButtonColor: "#10b981",
       customClass: {
         popup: "border border-white/10 rounded-2xl backdrop-blur-xl",
       },
@@ -148,10 +148,10 @@ export default function Certificates() {
       text: "You won't be able to revert this certificate!",
       icon: "warning",
       showCancelButton: true,
-      background: "#030014",
+      background: "#030f1b",
       color: "#ffffff",
       confirmButtonColor: "#ef4444",
-      cancelButtonColor: "#3b82f6",
+      cancelButtonColor: "#38bdf8",
       confirmButtonText: "Yes, delete it!",
       customClass: {
         popup: "border border-white/10 rounded-2xl",
@@ -172,9 +172,9 @@ export default function Certificates() {
         title: "Deleted!",
         text: "Your certificate has been deleted.",
         icon: "success",
-        background: "#030014",
+        background: "#030f1b",
         color: "#ffffff",
-        confirmButtonColor: "#6366f1",
+        confirmButtonColor: "#10b981",
         customClass: {
           popup: "border border-white/10 rounded-2xl",
         },
@@ -190,9 +190,9 @@ export default function Certificates() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl blur opacity-50" />
-          <div className="relative w-9 h-9 bg-[#030014] rounded-xl border border-white/15 flex items-center justify-center">
-            <Award className="w-4 h-4 text-indigo-400" />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-xl blur opacity-50" />
+          <div className="relative w-9 h-9 bg-[#030f1b] rounded-xl border border-white/15 flex items-center justify-center">
+            <Award className="w-4 h-4 text-emerald-400" />
           </div>
         </div>
         <div>
@@ -209,7 +209,7 @@ export default function Certificates() {
       <Card>
         <div className="p-5 sm:p-6 space-y-4">
           <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Plus className="w-4 h-4 text-indigo-400" /> Upload Certificate
+            <Plus className="w-4 h-4 text-emerald-400" /> Upload Certificate
           </h2>
 
           <label
@@ -225,8 +225,8 @@ export default function Certificates() {
             }}
             className={`flex flex-col items-center justify-center w-full min-h-[160px] rounded-xl border-2 border-dashed cursor-pointer transition-all duration-300 ${
               dragOver
-                ? "border-indigo-400/60 bg-indigo-500/10"
-                : "border-white/12 bg-white/4 hover:border-indigo-500/35 hover:bg-white/7"
+                ? "border-emerald-400/60 bg-emerald-500/10"
+                : "border-white/12 bg-white/4 hover:border-emerald-500/35 hover:bg-white/7"
             }`}
           >
             {preview ? (
@@ -237,8 +237,8 @@ export default function Certificates() {
               />
             ) : (
               <div className="text-center space-y-2 p-6">
-                <div className="w-11 h-11 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto">
-                  <ImageIcon className="w-5 h-5 text-indigo-400" />
+                <div className="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto">
+                  <ImageIcon className="w-5 h-5 text-emerald-400" />
                 </div>
                 <p className="text-sm text-gray-300">
                   Drag & drop or click to upload
@@ -276,12 +276,12 @@ export default function Certificates() {
                   disabled={uploading}
                   className="relative group/u"
                 >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-60 blur group-hover/u:opacity-100 transition duration-300" />
-                  <div className="relative flex items-center gap-2 px-4 py-1.5 bg-[#030014] rounded-xl border border-white/10">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-60 blur group-hover/u:opacity-100 transition duration-300" />
+                  <div className="relative flex items-center gap-2 px-4 py-1.5 bg-[#030f1b] rounded-xl border border-white/10">
                     {uploading ? (
                       <div className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                     ) : (
-                      <Upload className="w-3.5 h-3.5 text-indigo-400" />
+                      <Upload className="w-3.5 h-3.5 text-emerald-400" />
                     )}
                     <span className="text-xs text-gray-200">
                       {uploading ? "Uploading..." : "Upload"}

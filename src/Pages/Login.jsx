@@ -42,13 +42,13 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="relative group">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-700" />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-700" />
           <div className="relative bg-white/5 backdrop-blur-xl border border-white/15 rounded-2xl p-8 space-y-7">
             {/* Header */}
             <div className="text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-500/25">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-                <span className="text-indigo-300 text-xs font-medium">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/25">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-300 text-xs font-medium">
                   Admin Portal
                 </span>
               </div>
@@ -64,7 +64,7 @@ export default function Login() {
                 <label className="text-xs text-gray-400 uppercase tracking-wider">
                   Email
                 </label>
-                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-indigo-500/60 transition-colors">
+                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-emerald-500/60 transition-colors">
                   <Mail className="w-4 h-4 text-gray-500 ml-4 shrink-0" />
                   <input
                     type="email"
@@ -81,7 +81,7 @@ export default function Login() {
                 <label className="text-xs text-gray-400 uppercase tracking-wider">
                   Password
                 </label>
-                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-indigo-500/60 transition-colors">
+                <div className="flex items-center bg-white/8 border border-white/15 rounded-xl overflow-hidden focus-within:border-emerald-500/60 transition-colors">
                   <Lock className="w-4 h-4 text-gray-500 ml-4 shrink-0" />
                   <input
                     type={showPassword ? "text" : "password"}
@@ -110,9 +110,9 @@ export default function Login() {
                 disabled={loading}
                 className="relative group/btn w-full mt-1"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-70 blur group-hover/btn:opacity-100 transition duration-300" />
-                <div className="relative h-11 bg-[#030014] rounded-xl border border-white/10 flex items-center justify-center gap-2 overflow-hidden">
-                  <div className="absolute inset-0 scale-x-0 group-hover/btn:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-70 blur group-hover/btn:opacity-100 transition duration-300" />
+                <div className="relative h-11 bg-[#030f1b] rounded-xl border border-white/10 flex items-center justify-center gap-2 overflow-hidden">
+                  <div className="absolute inset-0 scale-x-0 group-hover/btn:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#0284c7]/20 to-[#059669]/20" />
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                   ) : (

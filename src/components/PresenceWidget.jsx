@@ -91,11 +91,11 @@ export default function PresenceWidget() {
         glow: "shadow-red-500/20",
       },
       default: {
-        bg: "from-purple-500/15 to-violet-500/10",
-        border: "border-purple-500/30",
-        text: "text-purple-400",
-        badge: "bg-purple-500/20 border-purple-400/40",
-        glow: "shadow-purple-500/20",
+        bg: "from-sky-500/15 to-emerald-500/10",
+        border: "border-emerald-500/30",
+        text: "text-emerald-400",
+        badge: "bg-emerald-500/20 border-emerald-400/40",
+        glow: "shadow-emerald-500/20",
       },
     };
     return colors[type] || colors.default;

@@ -15,39 +15,37 @@ import {
 
 const Card = ({ children, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
-    <div className="relative bg-white/5 backdrop-blur-xl border border-white/12 rounded-2xl h-full">
+    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500" />
+    <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col justify-between overflow-hidden">
+      <div className="space-y-3">
+        <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center">
+          <FolderGit2 className="w-5 h-5 text-emerald-400" />
+        </div>
+      </div>
       {children}
     </div>
   </div>
 );
 
-const InputField = ({
-  label,
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-  required = false,
-}) => (
+const FormField = ({ label, children }) => (
   <div className="space-y-1.5">
-    <label className="text-xs text-indigo-300/70 uppercase tracking-wider font-medium">
+    <label className="text-xs text-emerald-300/70 uppercase tracking-wider font-medium">
       {label}
     </label>
-    <input
-      type={type}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      required={required}
-      className="w-full bg-[#0d0d22] border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-600 text-sm outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20 transition-all"
-    />
+    {children}
   </div>
+);
+
+const Input = (props) => (
+  <input
+    {...props}
+    className="w-full bg-[#041724] border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-600 text-sm outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+  />
 );
 
 const SkeletonCard = () => (
   <div className="relative">
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-10" />
+    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-10" />
     <div className="relative bg-white/5 border border-white/12 rounded-2xl p-4 flex flex-col gap-3">
       <div className="w-full aspect-[16/8] bg-white/5 animate-pulse rounded-xl" />
       <div className="h-4 bg-white/5 animate-pulse rounded-lg w-2/3" />
@@ -104,7 +102,7 @@ const ProjectCard = ({ project, onDelete, onEdit }) => {
             {project.TechStack.map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded-full bg-indigo-500/15 border border-indigo-500/25 text-indigo-300 text-xs"
+                className="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25 text-emerald-300 text-xs"
               >
                 {t}
               </span>
@@ -137,7 +135,7 @@ const ProjectCard = ({ project, onDelete, onEdit }) => {
           <div className="flex gap-2">
             <button
               onClick={() => onEdit(project)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-indigo-500/25 text-indigo-400 hover:bg-indigo-500/10 text-xs transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/25 text-emerald-400 hover:bg-emerald-500/10 text-xs transition-colors"
             >
               <Pencil className="w-3 h-3" /> Edit
             </button>
@@ -164,9 +162,8 @@ const Modal = ({ title, onClose, children }) => (
       className="relative z-10 w-full max-w-2xl flex flex-col"
       style={{ maxHeight: "calc(100vh - 24px)" }}
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl blur opacity-20 pointer-events-none" />
-      <div className="relative bg-[#0a0a1a] border border-white/12 rounded-2xl flex flex-col overflow-hidden">
-        {/* Fixed header */}
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-2xl blur opacity-20 pointer-events-none" />
+      <div className="relative bg-[#030f1b] border border-white/12 rounded-2xl flex flex-col overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/8 shrink-0">
           <h2 className="text-base font-semibold text-white">{title}</h2>
           <button
@@ -177,150 +174,109 @@ const Modal = ({ title, onClose, children }) => (
             <X className="w-5 h-5" />
           </button>
         </div>
-        {/* Scrollable content */}
         <div className="overflow-y-auto flex-1">{children}</div>
       </div>
     </div>
   </div>
 );
 
-const ProjectForm = ({
-  initial,
-  onSubmit,
-  onCancel,
-  submitLabel = "Save Project",
-  uploading,
-}) => {
+const ProjectForm = ({ initial, onSubmit, onCancel, submitLabel = "Save Project", uploading, }) => {
   const [form, setForm] = useState({
     Title: initial?.Title || "",
     Description: initial?.Description || "",
-    TechStack: Array.isArray(initial?.TechStack)
-      ? initial.TechStack.join(", ")
-      : initial?.TechStack || "",
-    Features: Array.isArray(initial?.Features)
-      ? initial.Features.join(", ")
-      : initial?.Features || "",
+    TechStack: Array.isArray(initial?.TechStack) ? initial.TechStack.join(", ") : initial?.TechStack || "",
+    Features: Array.isArray(initial?.Features) ? initial.Features.join(", ") : initial?.Features || "",
     Link: initial?.Link || "",
     Github: initial?.Github || "",
   });
   const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(initial?.Img || null);
+  const [imgPreview, setImgPreview] = useState(initial?.Img || null);
 
-  const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleFileChange = (e) => {
+  const onFileChange = (e) => {
     const f = e.target.files[0];
     if (!f) return;
     setFile(f);
-    setPreview(URL.createObjectURL(f));
+    setImgPreview(URL.createObjectURL(f));
   };
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(form, file);
-      }}
+      onSubmit={(e) => { e.preventDefault(); onSubmit(form, file); }}
       className="p-5 sm:p-6 space-y-4"
     >
+      <FormField label="Project Title *">
+        <Input name="Title" value={form.Title} onChange={onChange} required placeholder="e.g. My Awesome App" />
+      </FormField>
+
+      <FormField label="Description *">
+        <textarea
+          name="Description"
+          value={form.Description}
+          onChange={onChange}
+          required
+          rows={3}
+          className="w-full bg-[#041724] border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-600 text-sm outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/20 transition-all resize-none"
+          placeholder="A brief overview of the project..."
+        />
+      </FormField>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="sm:col-span-2">
-          <InputField
-            label="Project Title"
-            value={form.Title}
-            onChange={set("Title")}
-            placeholder="e.g. My Portfolio Website"
-            required
-          />
-        </div>
-
-        <div className="sm:col-span-2 space-y-1.5">
-          <label className="text-xs text-indigo-300/70 uppercase tracking-wider font-medium">
-            Description
-          </label>
-          <textarea
-            value={form.Description}
-            onChange={set("Description")}
-            placeholder="Describe what this project does, its purpose, and impact..."
-            rows={3}
-            className="w-full bg-[#0d0d22] border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 placeholder-gray-600 text-sm outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20 transition-all resize-none"
-          />
-        </div>
-
-        <InputField
-          label="Tech Stack (comma separated)"
-          value={form.TechStack}
-          onChange={set("TechStack")}
-          placeholder="e.g. React, Tailwind, Supabase"
-        />
-        <InputField
-          label="Key Features (comma separated)"
-          value={form.Features}
-          onChange={set("Features")}
-          placeholder="e.g. Auth, Dark mode, REST API"
-        />
-        <InputField
-          label="Live URL"
-          value={form.Link}
-          onChange={set("Link")}
-          placeholder="https://yourproject.com"
-        />
-        <InputField
-          label="GitHub URL"
-          value={form.Github}
-          onChange={set("Github")}
-          placeholder="https://github.com/username/repo"
-        />
-
-        <div className="sm:col-span-2 space-y-1.5">
-          <label className="text-xs text-indigo-300/70 uppercase tracking-wider font-medium">
-            Project Image
-          </label>
-          <label className="flex items-center gap-4 w-full bg-[#0d0d22] border border-dashed border-white/15 rounded-xl px-4 py-4 cursor-pointer hover:border-indigo-500/40 hover:bg-white/4 transition-all">
-            {preview ? (
-              <img
-                src={preview}
-                className="h-16 w-24 object-cover rounded-lg border border-white/10"
-                alt="preview"
-              />
-            ) : (
-              <div className="w-24 h-16 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">
-                <ImageIcon className="w-5 h-5 text-gray-600" />
-              </div>
-            )}
-            <div>
-              <p className="text-sm text-gray-300">
-                {preview ? "Change image" : "Click to upload image"}
-              </p>
-              <p className="text-xs text-gray-600 mt-0.5">
-                PNG, JPG, WEBP supported
-              </p>
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </label>
-        </div>
+        <FormField label="Tech Stack (comma separated)">
+          <Input name="TechStack" value={form.TechStack} onChange={onChange} placeholder="React, Node.js, Tailwind" />
+        </FormField>
+        <FormField label="Features (comma separated)">
+          <Input name="Features" value={form.Features} onChange={onChange} placeholder="Authentication, Dark Mode" />
+        </FormField>
       </div>
 
-      <div className="flex justify-end gap-2 pt-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FormField label="Live Demo URL">
+          <Input name="Link" value={form.Link} onChange={onChange} placeholder="https://myproject.com" />
+        </FormField>
+        <FormField label="GitHub Repository URL">
+          <Input name="Github" value={form.Github} onChange={onChange} placeholder="https://github.com/user/repo" />
+        </FormField>
+      </div>
+
+      <div className="space-y-1.5">
+        <label className="text-xs text-emerald-300/70 uppercase tracking-wider font-medium">
+          Project Cover Image
+        </label>
+        <label className="flex items-center gap-4 w-full bg-[#041724] border border-dashed border-white/15 rounded-xl px-4 py-4 cursor-pointer hover:border-emerald-500/40 hover:bg-white/4 transition-all">
+          <input type="file" accept="image/*" className="hidden" onChange={onFileChange} />
+          {imgPreview ? (
+            <img src={imgPreview} alt="preview" className="w-16 h-12 object-cover rounded-lg shrink-0 border border-white/10" />
+          ) : (
+            <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+              <Upload className="w-5 h-5 text-emerald-400" />
+            </div>
+          )}
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-gray-200 truncate">
+              {file ? file.name : form.Img ? "Click to change image" : "Upload cover image"}
+            </p>
+            <p className="text-xs text-gray-500">PNG, JPG, WebP up to 5MB</p>
+          </div>
+        </label>
+      </div>
+
+      <div className="flex justify-end gap-3 pt-2">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 rounded-xl border border-white/10 text-gray-400 hover:text-white text-sm transition-colors"
+          className="px-4 py-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 text-sm transition-colors"
         >
           Cancel
         </button>
-        <button type="submit" disabled={uploading} className="relative group/s">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-60 blur group-hover/s:opacity-100 transition duration-300" />
-          <div className="relative flex items-center gap-2 px-5 py-2 bg-[#030014] rounded-xl border border-white/10">
+        <button type="submit" disabled={uploading} className="relative group/s shrink-0">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-60 blur group-hover/s:opacity-100 transition duration-300" />
+          <div className="relative flex items-center gap-2 px-5 py-2 bg-[#030f1b] rounded-xl border border-white/10">
             {uploading ? (
               <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
             ) : (
-              <Upload className="w-4 h-4 text-indigo-400" />
+              <Upload className="w-4 h-4 text-emerald-400" />
             )}
             <span className="text-sm text-gray-200">
               {uploading ? "Saving..." : submitLabel}
@@ -345,9 +301,9 @@ export default function Projects() {
       title: title,
       text: text,
       icon: icon,
-      background: "#030014",
+      background: "#030f1b",
       color: "#ffffff",
-      confirmButtonColor: "#6366f1",
+      confirmButtonColor: "#10b981",
       customClass: {
         popup: "border border-white/10 rounded-2xl backdrop-blur-xl",
       },
@@ -480,10 +436,10 @@ export default function Projects() {
       text: "You won't be able to revert this project!",
       icon: "warning",
       showCancelButton: true,
-      background: "#030014",
+      background: "#030f1b",
       color: "#ffffff",
       confirmButtonColor: "#ef4444",
-      cancelButtonColor: "#3b82f6",
+      cancelButtonColor: "#38bdf8",
       confirmButtonText: "Yes, delete it!",
       customClass: {
         popup: "border border-white/10 rounded-2xl",
@@ -501,9 +457,9 @@ export default function Projects() {
         title: "Deleted!",
         text: "Your project has been deleted.",
         icon: "success",
-        background: "#030014",
+        background: "#030f1b",
         color: "#ffffff",
-        confirmButtonColor: "#6366f1",
+        confirmButtonColor: "#10b981",
         customClass: {
           popup: "border border-white/10 rounded-2xl",
         },
@@ -520,9 +476,9 @@ export default function Projects() {
       <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl blur opacity-50" />
-            <div className="relative w-9 h-9 bg-[#030014] rounded-xl border border-white/15 flex items-center justify-center">
-              <FolderGit2 className="w-4 h-4 text-indigo-400" />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#38bdf8] via-[#2dd4bf] to-[#34d399] rounded-xl blur opacity-50" />
+            <div className="relative w-9 h-9 bg-[#030f1b] rounded-xl border border-white/15 flex items-center justify-center">
+              <FolderGit2 className="w-4 h-4 text-emerald-400" />
             </div>
           </div>
           <div>
@@ -539,9 +495,9 @@ export default function Projects() {
           onClick={() => setShowCreate(true)}
           className="relative group shrink-0"
         >
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur group-hover:opacity-80 transition duration-300" />
-          <div className="relative flex items-center gap-2 px-4 py-2.5 bg-[#030014] rounded-xl border border-white/10">
-            <Plus className="w-4 h-4 text-indigo-400" />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] rounded-xl opacity-50 blur group-hover:opacity-80 transition duration-300" />
+          <div className="relative flex items-center gap-2 px-4 py-2.5 bg-[#030f1b] rounded-xl border border-white/10">
+            <Plus className="w-4 h-4 text-emerald-400" />
             <span className="text-sm text-gray-200">New Project</span>
           </div>
         </button>
