@@ -100,26 +100,87 @@ function a11yProps(index) {
   };
 }
 
+const FALLBACK_PROJECTS = [
+  {
+    id: 1,
+    Title: "Sistem Informasi Perpustakaan (PUSTANI)",
+    Description: "Mengembangkan aplikasi desktop manajemen literatur pertanian menggunakan Java GUI dan database MySQL dengan menerapkan relasi tabel yang optimal untuk manipulasi data.",
+    Img: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=800&auto=format&fit=crop",
+    TechStack: ["Java GUI", "MySQL", "Java", "SQL"],
+    Features: ["Manajemen Literatur", "Relasi Basis Data", "Sistem CRUD Desktop"],
+    Link: "https://github.com/bilker29",
+    Github: "https://github.com/bilker29",
+  },
+  {
+    id: 2,
+    Title: "Infrastruktur Jaringan Bandara (Cisco)",
+    Description: "Merancang simulasi topologi jaringan kompleks berskala bandara menggunakan Cisco Packet Tracer dengan implementasi VLAN, Routing (OSPF/Static), dan DHCP Server.",
+    Img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop",
+    TechStack: ["Cisco Packet Tracer", "VLAN", "OSPF", "Routing", "DHCP Server"],
+    Features: ["Simulasi Topologi Jaringan Bandara", "VLAN & Subnetting", "Routing OSPF & Static"],
+    Link: "https://github.com/bilker29",
+    Github: "https://github.com/bilker29",
+  },
+  {
+    id: 3,
+    Title: "Website Portofolio & Company Profile",
+    Description: "Membangun platform digital responsif untuk representasi bisnis agrikultur menggunakan HTML, CSS, Bootstrap, dan PHP.",
+    Img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+    TechStack: ["HTML", "CSS", "Bootstrap", "PHP", "MySQL"],
+    Features: ["Full-Stack Web Development", "Desain Responsif", "Integrasi Database"],
+    Link: "https://billy-wicaksono-website-portofolio.vercel.app/",
+    Github: "https://github.com/bilker29",
+  },
+];
+
+const FALLBACK_CERTIFICATES = [
+  {
+    id: 1,
+    Title: "Sertifikasi Kompetensi Teknisi Komputer dan Jaringan – LSP BNSP",
+    Img: "https://images.unsplash.com/photo-1589330694653-aded6fac0243?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    id: 2,
+    Title: "Sertifikasi Kemampuan Bahasa Inggris TOEIC",
+    Img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    id: 3,
+    Title: "Sertifikasi Sabuk Hitam DAN 1 Karate",
+    Img: "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    id: 4,
+    Title: "Juara 2 Mahasiswa Kata Perorangan Putra - UPI Karate Cup V 2025",
+    Img: "https://images.unsplash.com/photo-1578269174936-2709b6aeb913?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    id: 5,
+    Title: "Juara 2 Mahasiswa Kumite -67 KG - Liga Esa Unggul 2024",
+    Img: "https://images.unsplash.com/photo-1517649763962-0c6232661a0b?q=80&w=800&auto=format&fit=crop",
+  },
+];
+
 const techStacks = [
+  { icon: "java.jpg", language: "Java" },
+  { icon: "php.jpg", language: "PHP" },
   { icon: "html.svg", language: "HTML" },
   { icon: "css.svg", language: "CSS" },
+  { icon: "sql.jpg", language: "SQL" },
+  { icon: "bootstrap.svg", language: "Bootstrap" },
   { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
   { icon: "reactjs.svg", language: "ReactJS" },
+  { icon: "tailwind.svg", language: "Tailwind CSS" },
   { icon: "vite.svg", language: "Vite" },
   { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "firebase.svg", language: "Firebase" },
-  { icon: "MUI.svg", language: "Material UI" },
   { icon: "vercel.svg", language: "Vercel" },
-  { icon: "SweetAlert.svg", language: "SweetAlert2" },
 ];
 
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [projects, setProjects] = useState([]);
-  const [certificates, setCertificates] = useState([]);
+  const [projects, setProjects] = useState(FALLBACK_PROJECTS);
+  const [certificates, setCertificates] = useState(FALLBACK_CERTIFICATES);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const isMobile = window.innerWidth < 768;
@@ -141,36 +202,34 @@ export default function FullWidthTabs() {
           .order("id", { ascending: false }),
       ]);
 
-      if (projectsResponse.error) throw projectsResponse.error;
-      if (certificatesResponse.error) throw certificatesResponse.error;
+      if (!projectsResponse.error && projectsResponse.data?.length > 0) {
+        const formattedProjects = projectsResponse.data.map((item) => ({
+          id: item.id,
+          Title: item.title || item.Title,
+          Description: item.description || item.Description,
+          Img: item.img || item.Img,
+          TechStack: item.tech_stack || item.techstack || item.TechStack,
+          Features: item.features || item.Features,
+          Link: item.link || item.Link,
+          Github: item.github || item.Github,
+        }));
+        setProjects(formattedProjects);
+        localStorage.setItem("projects", JSON.stringify(formattedProjects));
+      } else {
+        localStorage.setItem("projects", JSON.stringify(FALLBACK_PROJECTS));
+      }
 
-      const projectData = projectsResponse.data || [];
-      const certificateData = certificatesResponse.data || [];
-
-      const formattedProjects = projectData.map((item) => ({
-        id: item.id,
-        Title: item.title || item.Title,
-        Description: item.description || item.Description,
-        Img: item.img || item.Img,
-        TechStack: item.tech_stack || item.techstack || item.TechStack,
-        Features: item.features || item.Features,
-        Link: item.link || item.Link,
-        Github: item.github || item.Github,
-      }));
-
-      const formattedCertificates = certificateData.map((item) => ({
-        id: item.id,
-        Img: item.img || item.Img,
-      }));
-
-      setProjects(formattedProjects);
-      setCertificates(formattedCertificates);
-
-      localStorage.setItem("projects", JSON.stringify(formattedProjects));
-      localStorage.setItem(
-        "certificates",
-        JSON.stringify(formattedCertificates),
-      );
+      if (!certificatesResponse.error && certificatesResponse.data?.length > 0) {
+        const formattedCertificates = certificatesResponse.data.map((item) => ({
+          id: item.id,
+          Img: item.img || item.Img,
+          Title: item.title || item.Title || "Sertifikat / Prestasi",
+        }));
+        setCertificates(formattedCertificates);
+        localStorage.setItem("certificates", JSON.stringify(formattedCertificates));
+      } else {
+        localStorage.setItem("certificates", JSON.stringify(FALLBACK_CERTIFICATES));
+      }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
@@ -180,8 +239,10 @@ export default function FullWidthTabs() {
     const cachedProjects = localStorage.getItem("projects");
     const cachedCertificates = localStorage.getItem("certificates");
 
-    if (cachedProjects && cachedCertificates) {
+    if (cachedProjects && JSON.parse(cachedProjects).length > 0) {
       setProjects(JSON.parse(cachedProjects));
+    }
+    if (cachedCertificates && JSON.parse(cachedCertificates).length > 0) {
       setCertificates(JSON.parse(cachedCertificates));
     }
 

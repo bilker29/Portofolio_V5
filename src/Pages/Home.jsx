@@ -23,7 +23,7 @@ const StatusBadge = memo(() => (
       <div className="relative px-3 sm:px-4 py-2 rounded-full bg-emerald-50/90 backdrop-blur-xl border border-emerald-200 shadow-sm">
         <span className="bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-bold flex items-center">
           <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-emerald-600" />
-          Ready to Innovate
+          Google Student Ambassador 2026 | IPK 3.76
         </span>
       </div>
     </div>
@@ -89,10 +89,11 @@ const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
 const WORDS = [
   "Informatics Engineering Student",
-  "Cyber Security Enthusiast",
-  "Network & Software Engineer",
+  "IT Support & Web Developer",
+  "Google Student Ambassador 2026",
+  "Junior Software Engineer",
 ];
-const TECH_STACK = ["Cisco", "Java", "PHP", "SQL"];
+const TECH_STACK = ["Java", "PHP", "HTML", "CSS", "SQL", "Bootstrap", "Cisco", "AWS", "Docker"];
 const SOCIAL_LINKS = [
   {
     icon: Github,
@@ -241,11 +242,7 @@ const Home = () => {
                     data-aos="fade-up"
                     data-aos-delay="1000"
                   >
-                    Mahasiswa Teknik Informatika Universitas Pasundan yang
-                    sangat antusias dalam mengeksplorasi dunia Software
-                    Engineering, Cyber Security, dan Konfigurasi Jaringan. Saya
-                    selalu bersemangat untuk memecahkan masalah IT dan terus
-                    mempelajari teknologi baru.
+                    Mahasiswa Teknik Informatika Universitas Pasundan (Semester 4) dengan latar belakang SMK Teknik Komputer dan Jaringan (TKJ). Berdedikasi tinggi mengombinasikan keunggulan akademik selaku Penerima Beasiswa KIP-Kuliah (IPK 3.76/4.00) dengan sertifikasi kompetensi IT Support & Jaringan dari BNSP. Memiliki pengalaman praktis dalam pengembangan aplikasi Java GUI, full-stack web development (PHP & MySQL), manajemen infrastruktur Cisco, serta aktif sebagai Google Student Ambassador 2026.
                   </p>
 
                   {/* Tech Stack */}
