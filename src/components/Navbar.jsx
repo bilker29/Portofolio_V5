@@ -5,6 +5,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
     { href: "#Home", label: "Home" },
@@ -17,6 +18,12 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      // Scroll Progress %
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolledPct = (winScroll / height) * 100;
+      setScrollProgress(scrolledPct);
 
       const sections = navItems
         .map((item) => {
@@ -72,6 +79,14 @@ const Navbar = () => {
 
   return (
     <header className="fixed w-full top-0 z-50 transition-all duration-500 pt-3 sm:pt-4 px-4">
+      {/* Top Scroll Progress Indicator Bar */}
+      <div className="fixed top-0 left-0 w-full h-[3px] bg-slate-200/50 z-50 overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] transition-all duration-150 shadow-sm shadow-sky-500/50"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       <div className="max-w-6xl mx-auto">
         <nav
           className={`relative flex items-center justify-between px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl sm:rounded-full transition-all duration-500 ${

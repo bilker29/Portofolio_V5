@@ -120,7 +120,17 @@ const WORDS = [
   "Google Student Ambassador 2026",
   "Junior Software Engineer",
 ];
-const TECH_STACK = ["Java", "PHP", "HTML", "CSS", "SQL", "Bootstrap", "Cisco", "AWS", "Docker"];
+const TECH_STACK = [
+  "Java GUI",
+  "PHP & MySQL",
+  "React.js",
+  "Tailwind CSS",
+  "Cisco Networking",
+  "Git & GitHub",
+  "Supabase",
+  "Bootstrap",
+  "Vite",
+];
 const SOCIAL_LINKS = [
   {
     icon: Github,

@@ -83,18 +83,21 @@ const FALLBACK_CERTIFICATES = [
 ];
 
 const techStacks = [
-  { icon: "java.jpg", language: "Java" },
-  { icon: "php.jpg", language: "PHP" },
-  { icon: "html.svg", language: "HTML" },
-  { icon: "css.svg", language: "CSS" },
-  { icon: "sql.jpg", language: "SQL" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "reactjs.svg", language: "ReactJS" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
-  { icon: "vite.svg", language: "Vite" },
-  { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "vercel.svg", language: "Vercel" },
+  { icon: "java.jpg", language: "Java & GUI", category: "Desktop & OOP", color: "from-red-500/20 to-orange-500/10" },
+  { icon: "php.jpg", language: "PHP", category: "Backend Web", color: "from-indigo-500/20 to-purple-500/10" },
+  { icon: "javascript.svg", language: "JavaScript", category: "Core Language", color: "from-amber-500/20 to-yellow-500/10" },
+  { icon: "reactjs.svg", language: "React.js", category: "Frontend Framework", color: "from-sky-500/20 to-cyan-500/10" },
+  { icon: "tailwind.svg", language: "Tailwind CSS", category: "CSS Framework", color: "from-cyan-500/20 to-teal-500/10" },
+  { icon: "html.svg", language: "HTML5", category: "Web Structure", color: "from-orange-500/20 to-red-500/10" },
+  { icon: "css.svg", language: "CSS3", category: "Styling & Flex", color: "from-blue-500/20 to-indigo-500/10" },
+  { icon: "sql.jpg", language: "SQL & MySQL", category: "Relational DB", color: "from-blue-600/20 to-cyan-600/10" },
+  { icon: "bootstrap.svg", language: "Bootstrap", category: "UI Library", color: "from-purple-500/20 to-indigo-500/10" },
+  { icon: "vite.svg", language: "Vite", category: "Build Tool", color: "from-purple-600/20 to-pink-500/10" },
+  { icon: "nodejs.svg", language: "Node.js", category: "JS Runtime", color: "from-emerald-500/20 to-teal-500/10" },
+  { icon: "cisco", language: "Cisco Networking", category: "Networking / TKJ", color: "from-sky-600/20 to-blue-600/10" },
+  { icon: "git", language: "Git & GitHub", category: "Version Control", color: "from-orange-600/20 to-red-500/10" },
+  { icon: "supabase", language: "Supabase DB", category: "Cloud & Auth", color: "from-emerald-600/20 to-teal-600/10" },
+  { icon: "vercel.svg", language: "Vercel", category: "Deployment", color: "from-slate-700/20 to-slate-900/10" },
 ];
 
 export default function PortfolioShowcase() {
@@ -302,6 +305,8 @@ export default function PortfolioShowcase() {
                   <TechStackIcon
                     TechStackIcon={stack.icon}
                     Language={stack.language}
+                    Category={stack.category}
+                    Color={stack.color}
                   />
                 </div>
               ))}
