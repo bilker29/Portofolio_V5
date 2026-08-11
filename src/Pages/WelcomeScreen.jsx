@@ -94,7 +94,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
     <AnimatePresence>
       {isLoading && (
         <motion.div
-          className="fixed inset-0 bg-slate-50"
+          className="fixed inset-0 bg-gradient-to-br from-sky-100 via-teal-50 to-emerald-100"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit="exit"

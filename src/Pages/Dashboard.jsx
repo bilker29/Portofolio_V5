@@ -104,7 +104,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="flex text-slate-800 bg-slate-50" style={{ height: "100dvh" }}>
+    <div className="flex text-slate-800 bg-gradient-to-br from-sky-50 via-teal-50/60 to-emerald-50" style={{ height: "100dvh" }}>
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -115,7 +115,7 @@ export default function Dashboard() {
 
       {/* Sidebar - desktop: sticky, tinggi 100dvh */}
       <aside
-        className="hidden lg:flex w-60 shrink-0 flex-col border-r border-slate-200 bg-white/90 backdrop-blur-xl"
+        className="hidden lg:flex w-60 shrink-0 flex-col border-r border-sky-200/60 bg-white/90 backdrop-blur-xl shadow-sm"
         style={{ height: "100dvh", position: "sticky", top: 0 }}
       >
         <SidebarContent />
@@ -123,7 +123,7 @@ export default function Dashboard() {
 
       {/* Sidebar - mobile drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-slate-200 bg-white backdrop-blur-xl transition-transform duration-300 lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-30 w-60 flex flex-col border-r border-sky-200/60 bg-white backdrop-blur-xl transition-transform duration-300 lg:hidden ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -131,7 +131,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main area */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-slate-50">
+      <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-transparent">
         {/* Mobile topbar */}
         <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-white/90 backdrop-blur-xl shrink-0">
           <button

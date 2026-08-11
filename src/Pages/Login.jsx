@@ -39,7 +39,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-slate-50">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-sky-100 via-teal-50 to-emerald-100 relative overflow-hidden">
       <div className="w-full max-w-md">
         <div className="relative group">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-700" />
