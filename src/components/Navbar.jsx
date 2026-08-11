@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles, Code2 } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +17,14 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
       const sections = navItems
         .map((item) => {
           const section = document.querySelector(item.href);
           if (section) {
             return {
               id: item.href.replace("#", ""),
-              offset: section.offsetTop - 550,
+              offset: section.offsetTop - 300,
               height: section.offsetHeight,
             };
           }
@@ -35,7 +36,7 @@ const Navbar = () => {
       const active = sections.find(
         (section) =>
           currentPosition >= section.offset &&
-          currentPosition < section.offset + section.height,
+          currentPosition < section.offset + section.height
       );
 
       if (active) {
@@ -60,7 +61,7 @@ const Navbar = () => {
     e.preventDefault();
     const section = document.querySelector(href);
     if (section) {
-      const top = section.offsetTop - 100;
+      const top = section.offsetTop - 90;
       window.scrollTo({
         top: top,
         behavior: "smooth",
@@ -70,108 +71,109 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-        isOpen
-          ? "bg-white/95 backdrop-blur-xl border-b border-sky-100 shadow-md"
-          : scrolled
-            ? "bg-white/80 backdrop-blur-xl border-b border-sky-100/80 shadow-sm"
-            : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto px-[5%] sm:px-[5%] lg:px-[10%]">
-        <div className="flex items-center justify-between h-16">
+    <header className="fixed w-full top-0 z-50 transition-all duration-500 pt-3 sm:pt-4 px-4">
+      <div className="max-w-6xl mx-auto">
+        <nav
+          className={`relative flex items-center justify-between px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl sm:rounded-full transition-all duration-500 ${
+            scrolled || isOpen
+              ? "bg-white/85 backdrop-blur-xl border border-sky-200/80 shadow-lg shadow-sky-500/10"
+              : "bg-white/65 backdrop-blur-md border border-white/60 shadow-sm"
+          }`}
+        >
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <a
-              href="#Home"
-              onClick={(e) => scrollToSection(e, "#Home")}
-              className="text-xl font-bold bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent"
-            >
+          <a
+            href="#Home"
+            onClick={(e) => scrollToSection(e, "#Home")}
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            <div className="relative p-2 rounded-xl bg-gradient-to-tr from-[#0284c7] via-[#0d9488] to-[#059669] text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform duration-300">
+              <Code2 className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <span className="text-lg sm:text-xl font-extrabold bg-gradient-to-r from-slate-900 via-sky-800 to-emerald-700 bg-clip-text text-transparent tracking-tight">
               BilKer
-            </a>
-          </div>
+              <span className="text-sky-500 font-black">.</span>
+            </span>
+          </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-8 flex items-center space-x-8">
-              {navItems.map((item) => (
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60 backdrop-blur-md">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.substring(1);
+              return (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={(e) => scrollToSection(e, item.href)}
-                  className="group relative px-1 py-2 text-sm font-medium"
+                  className={`relative px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-300 ${
+                    isActive
+                      ? "text-white shadow-md shadow-sky-500/20"
+                      : "text-slate-600 hover:text-sky-700 hover:bg-slate-200/50"
+                  }`}
                 >
-                  <span
-                    className={`relative z-10 transition-colors duration-300 ${
-                      activeSection === item.href.substring(1)
-                        ? "bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent font-semibold"
-                        : "text-slate-600 group-hover:text-sky-600"
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                  <span
-                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#0284c7] to-[#059669] transform origin-left transition-transform duration-300 ${
-                      activeSection === item.href.substring(1)
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100"
-                    }`}
-                  />
+                  {isActive && (
+                    <span className="absolute inset-0 bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] rounded-full transition-all duration-300 -z-10" />
+                  )}
+                  {item.label}
                 </a>
-              ))}
-            </div>
+              );
+            })}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* GSA Badge CTA in Header */}
+          <div className="hidden lg:flex items-center">
+            <a
+              href="#Contact"
+              onClick={(e) => scrollToSection(e, "#Contact")}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold hover:bg-emerald-100 hover:scale-105 transition-all shadow-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <span>GSA 2026</span>
+            </a>
+          </div>
+
+          {/* Mobile Toggle Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`relative p-2 text-slate-700 hover:text-sky-600 transition-transform duration-300 ease-in-out transform ${
-                isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
-              }`}
+              className="p-2 rounded-xl bg-slate-100/80 border border-slate-200/80 text-slate-700 hover:text-sky-600 transition-all active:scale-95"
+              aria-label="Toggle Navigation"
             >
-              {isOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
+          </div>
+        </nav>
+
+        {/* Mobile Dropdown Menu */}
+        <div
+          className={`md:hidden mt-2 transition-all duration-300 ease-in-out ${
+            isOpen
+              ? "max-h-96 opacity-100 pointer-events-auto"
+              : "max-h-0 opacity-0 pointer-events-none overflow-hidden"
+          }`}
+        >
+          <div className="p-4 bg-white/95 backdrop-blur-xl border border-sky-100 rounded-2xl shadow-xl space-y-2">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.substring(1);
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
+                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                    isActive
+                      ? "bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] text-white shadow-md shadow-sky-500/20"
+                      : "text-slate-700 hover:bg-slate-100"
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {isActive && <Sparkles className="w-4 h-4 text-white" />}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${
-          isOpen
-            ? "max-h-screen opacity-100"
-            : "max-h-0 opacity-0 overflow-hidden"
-        }`}
-      >
-        <div className="px-4 py-6 space-y-4">
-          {navItems.map((item, index) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-              className={`block px-4 py-3 text-lg font-medium transition-all duration-300 ease ${
-                activeSection === item.href.substring(1)
-                  ? "bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] bg-clip-text text-transparent font-semibold"
-                  : "text-slate-600 hover:text-sky-600"
-              }`}
-              style={{
-                transitionDelay: `${index * 100}ms`,
-                transform: isOpen ? "translateX(0)" : "translateX(50px)",
-                opacity: isOpen ? 1 : 0,
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </div>
-    </nav>
+    </header>
   );
 };
 

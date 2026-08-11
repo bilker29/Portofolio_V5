@@ -2,13 +2,14 @@ import React, { useState, useEffect, memo } from "react";
 import { Sparkles, Video, Camera, X } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { supabase } from "../supabase";
 
 // Media Items Data
 const GALLERY_ROW_TOP = [
   {
     id: "top-1",
     type: "photo",
-    aspect: "portrait", // polaroid portrait format
+    aspect: "portrait",
     title: "Seminar & Gathering Pasundan",
     subtitle: "Acara & Kegiatan Mahasiswa",
     date: "2024",
@@ -19,7 +20,7 @@ const GALLERY_ROW_TOP = [
   {
     id: "top-2",
     type: "video",
-    aspect: "landscape", // landscape format
+    aspect: "landscape",
     title: "Software Engineering & Coding Session",
     subtitle: "Live Project Demo",
     date: "2024",
@@ -123,7 +124,6 @@ const GALLERY_ROW_BOTTOM = [
   },
 ];
 
-// Polaroid Card Item Component
 const PolaroidCard = memo(({ item, onClick }) => {
   const isPortrait = item.aspect === "portrait";
 
@@ -132,27 +132,23 @@ const PolaroidCard = memo(({ item, onClick }) => {
       onClick={() => onClick(item)}
       className="group cursor-pointer flex-shrink-0 relative transition-all duration-500 hover:-translate-y-2 hover:rotate-1"
     >
-      {/* Outer Polaroid Frame */}
       <div
-        className={`bg-white border border-slate-200/90 shadow-lg hover:shadow-2xl rounded-2xl p-3 flex flex-col justify-between transition-all duration-300 ${
-          isPortrait ? "w-[240px] sm:w-[280px]" : "w-[300px] sm:w-[360px]"
+        className={`glass-card border border-slate-200/90 shadow-lg hover:shadow-2xl hover:border-sky-300 rounded-2xl p-3.5 flex flex-col justify-between transition-all duration-300 ${
+          isPortrait ? "w-[250px] sm:w-[280px]" : "w-[310px] sm:w-[360px]"
         }`}
       >
-        {/* Media Container */}
-        <div className="relative overflow-hidden rounded-xl bg-slate-100 border border-slate-100">
-          {/* Badge Tag */}
+        <div className="relative overflow-hidden rounded-xl bg-slate-900 border border-slate-100">
           <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-slate-200/80">
             {item.type === "video" ? (
               <Video className="w-3.5 h-3.5 text-sky-600 animate-pulse" />
             ) : (
               <Camera className="w-3.5 h-3.5 text-emerald-600" />
             )}
-            <span className="text-[11px] font-bold text-slate-800">
+            <span className="text-[11px] font-extrabold text-slate-800">
               {item.tag}
             </span>
           </div>
 
-          {/* Autoplay Video vs Photo */}
           {item.type === "video" ? (
             <div className="relative w-full h-[180px] sm:h-[210px] overflow-hidden">
               <video
@@ -178,18 +174,17 @@ const PolaroidCard = memo(({ item, onClick }) => {
           )}
         </div>
 
-        {/* Bottom White Strip Caption Area (Polaroid Style) */}
         <div className="pt-3 pb-1 px-1 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="font-bold text-slate-800 text-sm sm:text-base line-clamp-1 group-hover:text-sky-600 transition-colors">
+              <h3 className="font-bold text-slate-900 text-sm sm:text-base line-clamp-1 group-hover:text-sky-600 transition-colors">
                 {item.title}
               </h3>
               <p className="text-xs text-slate-500 font-medium line-clamp-1 mt-0.5">
                 {item.subtitle}
               </p>
             </div>
-            <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+            <span className="shrink-0 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
               {item.date}
             </span>
           </div>
@@ -207,45 +202,59 @@ const PolaroidCard = memo(({ item, onClick }) => {
 
 export default function Gallery() {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [rowTop, setRowTop] = useState(GALLERY_ROW_TOP);
+  const [rowBottom, setRowBottom] = useState(GALLERY_ROW_BOTTOM);
 
   useEffect(() => {
-    AOS.init({
-      once: false,
-    });
+    AOS.init({ once: false });
+
+    const fetchGallery = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("gallery_items")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          const top = data.filter((item) => item.row !== "bottom");
+          const bottom = data.filter((item) => item.row === "bottom");
+
+          if (top.length > 0) setRowTop(top);
+          if (bottom.length > 0) setRowBottom(bottom);
+        }
+      } catch (err) {
+        console.error("Error loading gallery items from Supabase:", err);
+      }
+    };
+
+    fetchGallery();
   }, []);
 
-  // Double arrays for seamless marquee infinite loop
-  const topMarquee = [...GALLERY_ROW_TOP, ...GALLERY_ROW_TOP];
-  const bottomMarquee = [...GALLERY_ROW_BOTTOM, ...GALLERY_ROW_BOTTOM];
+  const topMarquee = [...rowTop, ...rowTop];
+  const bottomMarquee = [...rowBottom, ...rowBottom];
 
   return (
     <div
-      className="py-16 bg-slate-50 relative overflow-hidden text-slate-800"
+      className="py-16 relative overflow-hidden text-slate-800"
       id="Gallery"
     >
-      {/* Subtle Background Lighting */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Header */}
-      <div className="text-center mb-12 px-4" data-aos="fade-down" data-aos-duration="1000">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 mb-3">
-          <Sparkles className="w-4 h-4 text-sky-600" />
-          <span className="text-sky-800 text-xs font-bold uppercase tracking-wider">
+      <div className="text-center mb-12 px-4" data-aos="fade-down" data-aos-duration="800">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 mb-3 shadow-sm">
+          <Sparkles className="w-4 h-4 text-sky-600 animate-pulse" />
+          <span className="text-sky-800 text-xs font-extrabold uppercase tracking-wider">
             Dokumentasi & Aktivitas
           </span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669]">
+        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] tracking-tight">
           Activity Gallery
         </h2>
-        <p className="mt-3 text-slate-600 max-w-2xl mx-auto text-sm md:text-base font-medium">
-          Kumpulan momen kegiatan perkuliahan, kompetisi olahraga, seminar IT, serta aktivitas harian saya.
+        <p className="mt-2 text-slate-600 max-w-2xl mx-auto text-sm md:text-base font-medium">
+          Kumpulan momen perkuliahan, kejuaraan Karate nasional, seminar IT, serta kebersamaan harian.
         </p>
       </div>
 
       {/* Marquee Rows Container */}
       <div className="flex flex-col gap-6 relative">
-        {/* ROW 1: TOP (Right to Left) */}
         <div className="overflow-hidden w-full py-2">
           <div className="flex gap-6 w-max animate-marquee-left">
             {topMarquee.map((item, idx) => (
@@ -258,7 +267,6 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* ROW 2: BOTTOM (Left to Right) */}
         <div className="overflow-hidden w-full py-2">
           <div className="flex gap-6 w-max animate-marquee-right">
             {bottomMarquee.map((item, idx) => (
@@ -274,29 +282,27 @@ export default function Gallery() {
 
       {/* LIGHTBOX MODAL */}
       {selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden text-slate-800">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-3xl glass-card border border-slate-200/90 rounded-3xl shadow-2xl overflow-hidden text-slate-800 bg-white">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-800 font-bold text-xs">
+                <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-800 font-extrabold text-xs">
                   {selectedItem.tag}
                 </span>
-                <h3 className="font-extrabold text-slate-800 text-base sm:text-lg">
+                <h3 className="font-extrabold text-slate-900 text-base sm:text-lg">
                   {selectedItem.title}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedItem(null)}
-                className="p-1.5 rounded-full text-slate-400 hover:text-slate-800 hover:bg-slate-200 transition-colors"
+                className="p-2 rounded-full text-slate-400 hover:text-slate-800 hover:bg-slate-200/60 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal Body */}
             <div className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-              <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 max-h-[450px] flex items-center justify-center">
+              <div className="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 max-h-[450px] flex items-center justify-center">
                 {selectedItem.type === "video" ? (
                   <video
                     src={selectedItem.src}

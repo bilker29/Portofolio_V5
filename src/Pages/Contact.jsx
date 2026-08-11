@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Share2, User, Mail, MessageSquare, Send } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Share2, User, Mail, MessageSquare, Send, Sparkles } from "lucide-react";
 import SocialLinks from "../components/SocialLinks";
 import Komentar from "../components/Commentar";
 import Swal from "sweetalert2";
@@ -17,9 +16,7 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    AOS.init({
-      once: false,
-    });
+    AOS.init({ once: false });
   }, []);
 
   const handleChange = (e) => {
@@ -44,18 +41,15 @@ const ContactPage = () => {
     });
 
     try {
-      // 👇 LINK RAHASIA FORMSUBMIT KAMU SUDAH DIPASANG DI SINI 👇
-      const formSubmitUrl =
-        "https://formsubmit.co/billywicaksono.999@gmail.com";
+      const formSubmitUrl = "https://formsubmit.co/billywicaksono.999@gmail.com";
 
-      // Siapkan data form untuk FormSubmit
       const submitData = new FormData();
       submitData.append("name", formData.name);
       submitData.append("email", formData.email);
       submitData.append("message", formData.message);
       submitData.append("_subject", "Pesan Baru dari Website Portfolio");
-      submitData.append("_captcha", "false"); // Nonaktifkan captcha
-      submitData.append("_template", "table"); // Format email sebagai tabel
+      submitData.append("_captcha", "false");
+      submitData.append("_template", "table");
 
       await axios.post(formSubmitUrl, submitData, {
         headers: {
@@ -70,15 +64,11 @@ const ContactPage = () => {
         confirmButtonColor: "#059669",
         background: "#ffffff",
         color: "#0f172a",
-        timer: 2000,
+        timer: 2200,
         timerProgressBar: true,
       });
 
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       if (error.request && error.request.status === 0) {
         Swal.fire({
@@ -88,15 +78,11 @@ const ContactPage = () => {
           confirmButtonColor: "#059669",
           background: "#ffffff",
           color: "#0f172a",
-          timer: 2000,
+          timer: 2200,
           timerProgressBar: true,
         });
 
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", message: "" });
       } else {
         Swal.fire({
           title: "Gagal!",
@@ -113,60 +99,51 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="px-[5%] sm:px-[5%] lg:px-[10%] bg-slate-50">
-      <div className="text-center lg:mt-[5%] mt-10 mb-2 sm:px-0 px-[5%]">
+    <div className="px-[5%] sm:px-[5%] lg:px-[10%] pt-16 pb-12" id="Contact">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-50 border border-sky-200 mb-3 shadow-sm" data-aos="fade-down">
+          <Sparkles className="w-4 h-4 text-sky-600 animate-pulse" />
+          <span className="text-sky-800 text-xs font-extrabold uppercase tracking-wider">
+            Let's Talk & Collaborate
+          </span>
+        </div>
         <h2
           data-aos="fade-down"
-          data-aos-duration="1000"
-          className="inline-block text-3xl md:text-5xl font-extrabold text-center mx-auto text-transparent bg-clip-text"
+          data-aos-duration="900"
+          className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] tracking-tight"
         >
-          <span
-            style={{
-              color: "#0284c7",
-              backgroundImage:
-                "linear-gradient(45deg, #0284c7 10%, #059669 93%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Hubungi Saya
-          </span>
+          Hubungi Saya
         </h2>
         <p
           data-aos="fade-up"
-          data-aos-duration="1100"
+          data-aos-duration="1000"
           className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base mt-2 font-medium"
         >
-          Punya pertanyaan? Kirimi saya pesan, dan saya akan segera membalasnya.
+          Punya tawaran proyek, kolaborasi, atau pertanyaan? Kirim pesan dan mari berdiskusi.
         </p>
       </div>
 
-      <div
-        className="h-auto py-10 flex items-center justify-center 2xl:pr-[3.1%] lg:pr-[3.8%]  md:px-0"
-        id="Contact"
-      >
-        <div className="container px-[1%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-[45%_55%] 2xl:grid-cols-[35%_65%] gap-12">
-          <div className="bg-white/80 border border-slate-200/90 backdrop-blur-xl rounded-3xl shadow-xl p-5 py-10 sm:p-10 transform transition-all duration-500 hover:shadow-sky-500/10">
-            <div className="flex justify-between items-start mb-8">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Form */}
+          <div className="lg:col-span-5 glass-card border border-slate-200/90 rounded-3xl shadow-xl p-6 sm:p-8 hover:shadow-2xl hover:shadow-sky-500/10 transition-all duration-500">
+            <div className="flex justify-between items-start mb-6">
               <div>
-                <h2 className="text-4xl font-extrabold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669]">
-                  Hubungi
-                </h2>
-                <p className="text-slate-600 font-medium">
-                  Ada yang ingin didiskusikan? Kirim saya pesan dan mari kita
-                  bicara.
+                <h3 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669]">
+                  Send Message
+                </h3>
+                <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1">
+                  Isi formulir di bawah ini dan saya akan merespons secepatnya.
                 </p>
               </div>
-              <Share2 className="w-10 h-10 text-sky-600 opacity-60" />
+              <div className="p-3 rounded-2xl bg-sky-50 text-sky-600 border border-sky-100">
+                <Share2 className="w-6 h-6" />
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div
-                data-aos="fade-up"
-                data-aos-delay="100"
-                className="relative group"
-              >
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="relative group" data-aos="fade-up">
                 <User className="absolute left-4 top-4 w-5 h-5 text-slate-400 group-focus-within:text-sky-600 transition-colors" />
                 <input
                   type="text"
@@ -175,15 +152,12 @@ const ContactPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-slate-50 rounded-xl border border-slate-300 placeholder-slate-400 text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all duration-300 disabled:opacity-50 font-medium"
+                  className="w-full p-3.5 pl-12 bg-slate-50/80 rounded-xl border border-slate-200 placeholder-slate-400 text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-medium text-sm disabled:opacity-50"
                   required
                 />
               </div>
-              <div
-                data-aos="fade-up"
-                data-aos-delay="200"
-                className="relative group"
-              >
+
+              <div className="relative group" data-aos="fade-up" data-aos-delay="100">
                 <Mail className="absolute left-4 top-4 w-5 h-5 text-slate-400 group-focus-within:text-sky-600 transition-colors" />
                 <input
                   type="email"
@@ -192,15 +166,12 @@ const ContactPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full p-4 pl-12 bg-slate-50 rounded-xl border border-slate-300 placeholder-slate-400 text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all duration-300 disabled:opacity-50 font-medium"
+                  className="w-full p-3.5 pl-12 bg-slate-50/80 rounded-xl border border-slate-200 placeholder-slate-400 text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-medium text-sm disabled:opacity-50"
                   required
                 />
               </div>
-              <div
-                data-aos="fade-up"
-                data-aos-delay="300"
-                className="relative group"
-              >
+
+              <div className="relative group" data-aos="fade-up" data-aos-delay="200">
                 <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-slate-400 group-focus-within:text-sky-600 transition-colors" />
                 <textarea
                   name="message"
@@ -208,28 +179,28 @@ const ContactPage = () => {
                   value={formData.message}
                   onChange={handleChange}
                   disabled={isSubmitting}
-                  className="w-full resize-none p-4 pl-12 bg-slate-50 rounded-xl border border-slate-300 placeholder-slate-400 text-slate-800 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all duration-300 h-[9.9rem] disabled:opacity-50 font-medium"
+                  className="w-full resize-none p-3.5 pl-12 bg-slate-50/80 rounded-xl border border-slate-200 placeholder-slate-400 text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-medium text-sm h-36 disabled:opacity-50"
                   required
                 />
               </div>
+
               <button
-                data-aos="fade-up"
-                data-aos-delay="400"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] text-white py-4 rounded-xl font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-sky-500/20 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-md"
+                className="w-full bg-gradient-to-r from-[#0284c7] via-[#0d9488] to-[#059669] text-white py-3.5 rounded-xl font-extrabold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-sky-500/25 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
               >
-                <Send className="w-5 h-5" />
-                {isSubmitting ? "Mengirim..." : "Kirim Pesan"}
+                <Send className="w-4 h-4" />
+                <span>{isSubmitting ? "Mengirim..." : "Kirim Pesan"}</span>
               </button>
             </form>
 
-            <div className="mt-10 pt-6 border-t border-slate-200 flex justify-center space-x-6">
+            <div className="mt-8 pt-6 border-t border-slate-100">
               <SocialLinks />
             </div>
           </div>
 
-          <div className="bg-white/80 border border-slate-200/90 backdrop-blur-xl rounded-3xl p-3 py-3 md:p-10 md:py-8 shadow-xl transform transition-all duration-500 hover:shadow-sky-500/10">
+          {/* Right Comments Box */}
+          <div className="lg:col-span-7 glass-card border border-slate-200/90 rounded-3xl p-5 sm:p-8 shadow-xl hover:shadow-2xl hover:shadow-sky-500/10 transition-all duration-500">
             <Komentar />
           </div>
         </div>

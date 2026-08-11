@@ -1,14 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", system-ui, sans-serif;
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: rgba(2, 132, 199, 0.5) rgba(241, 245, 249, 0.8);
+    scrollbar-color: rgba(2, 132, 199, 0.6) rgba(241, 245, 249, 0.9);
 }
 
 html,
@@ -19,32 +20,72 @@ body {
     scroll-behavior: smooth !important;
 }
 
+/* Animations */
 @keyframes blob {
+
     0%,
     100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
+
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-20px) scale(1.05);
     }
 }
 
-.animate-blob {
-    animation: blob 8s infinite;
+@keyframes floatSlow {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(2deg);
+    }
 }
 
-.animation-delay-2000 {
-    animation-delay: 2s;
+@keyframes floatReverse {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(12px) rotate(-2deg);
+    }
 }
 
-.animation-delay-4000 {
-    animation-delay: 4s;
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        filter: drop-shadow(0 0 15px rgba(2, 132, 199, 0.4));
+    }
+
+    50% {
+        opacity: 0.8;
+        filter: drop-shadow(0 0 25px rgba(13, 148, 136, 0.6));
+    }
+}
+
+@keyframes shine {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(200%);
+    }
 }
 
 @keyframes marqueeLeft {
     0% {
         transform: translateX(0%);
     }
+
     100% {
         transform: translateX(-50%);
     }
@@ -54,9 +95,40 @@ body {
     0% {
         transform: translateX(-50%);
     }
+
     100% {
         transform: translateX(0%);
     }
+}
+
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-blob {
+    animation: blob 8s infinite ease-in-out;
+}
+
+.animate-float-slow {
+    animation: floatSlow 5s infinite ease-in-out;
+}
+
+.animate-float-reverse {
+    animation: floatReverse 6s infinite ease-in-out;
+}
+
+.animate-glow-pulse {
+    animation: glowPulse 4s infinite ease-in-out;
+}
+
+.animate-spin-slow {
+    animation: spinSlow 25s linear infinite;
 }
 
 .animate-marquee-left {
@@ -72,9 +144,49 @@ body {
     animation-play-state: paused;
 }
 
+.animate-shine {
+    animation: shine 2s ease-in-out infinite;
+}
+
+/* Glassmorphism & Custom Card Utilities */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.15), 0 0 20px -5px rgba(13, 148, 136, 0.1);
+    transform: translateY(-4px);
+}
+
+.glow-border {
+    position: relative;
+}
+
+.glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #0284c7, #0d9488, #059669, #0284c7);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.glow-border:hover::before {
+    opacity: 1;
+}
 
 /* Enhanced Custom Scrollbar Styles */
-
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -89,126 +201,21 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(2, 132, 199, 0.4);
+    background: linear-gradient(180deg, rgba(2, 132, 199, 0.6), rgba(13, 148, 136, 0.6));
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2), 0 0 10px rgba(56, 189, 248, 0.2);
+    box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.2), 0 0 10px rgba(56, 189, 248, 0.2);
     transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(2, 132, 199, 0.7);
+    background: linear-gradient(180deg, rgba(2, 132, 199, 0.85), rgba(13, 148, 136, 0.85));
     border: 1px solid rgba(16, 185, 129, 0.4);
-    box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.3), 0 0 15px rgba(56, 189, 248, 0.3);
-}
-
-
-/* When scrollbar is in active/clicked state */
-
-::-webkit-scrollbar-thumb:active {
-    background: rgba(2, 132, 199, 0.85);
-    border: 1px solid rgba(16, 185, 129, 0.6);
-    box-shadow: inset 0 0 40px rgba(16, 185, 129, 0.4), 0 0 20px rgba(56, 189, 248, 0.4);
-}
-
-::-webkit-scrollbar-corner {
-    background: transparent;
+    box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.3), 0 0 15px rgba(56, 189, 248, 0.3);
 }
 
 [data-aos] {
     will-change: transform, opacity !important;
 }
-
-@keyframes shine {
-    from {
-        left: -100%;
-    }
-    to {
-        left: 200%;
-    }
-}
-
-.animate-shine {
-    animation: shine 1.5s ease-in-out infinite;
-}
-
-
-/*   @media (prefers-color-scheme: dark) {
-	::-webkit-scrollbar-track {
-	  background: rgba(3, 0, 20, 0.6);
-	}
-  } */
-
-
-/* 
-  .container {
-	width: 100%;
-	height: 100%;
-  }
-  
-  .main > div {
-	position: absolute;
-	will-change: transform;
-	border-radius: 50%;
-	background: lightcoral;
-	box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-	opacity: 0.6;
-  }
-  
-  .main > div:nth-child(1) {
-	width: 60px;
-	height: 60px;
-  }
-  
-  .main > div:nth-child(2) {
-	width: 125px;
-	height: 125px;
-  }
-  
-  .main > div:nth-child(3) {
-	width: 75px;
-	height: 75px;
-  }
-  
-  .main > div::after {
-	content: '';
-	position: absolute;
-	top: 20px;
-	left: 20px;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	background: rgba(255, 0, 0, 0.8);
-  }
-  
-  .main > div:nth-child(2)::after {
-	top: 35px;
-	left: 35px;
-	width: 35px;
-	height: 35px;
-  }
-  
-  .main > div:nth-child(3)::after {
-	top: 25px;
-	left: 25px;
-	width: 25px;
-	height: 25px;
-  }
-  
-  .main {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	filter: url('#blob');
-	overflow: hidden;
-	background: transparent;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	cursor: default;
-  } */

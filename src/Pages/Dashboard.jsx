@@ -11,10 +11,12 @@ import { supabase } from "../supabase";
 import Projects from "./dashboard/Projects";
 import Certificates from "./dashboard/Certificates";
 import Comments from "./dashboard/Comments";
+import GalleryManager from "./dashboard/Gallery";
 import {
   FolderGit2,
   Award,
   MessageSquare,
+  Camera,
   LogOut,
   LayoutDashboard,
   Menu,
@@ -23,6 +25,7 @@ import {
 const NAV_ITEMS = [
   { to: "projects", label: "Projects", icon: FolderGit2 },
   { to: "certificates", label: "Certificates", icon: Award },
+  { to: "gallery", label: "Gallery", icon: Camera },
   { to: "comments", label: "Comments", icon: MessageSquare },
 ];
 
@@ -148,6 +151,7 @@ export default function Dashboard() {
             <Route index element={<Navigate to="projects" replace />} />
             <Route path="projects" element={<Projects />} />
             <Route path="certificates" element={<Certificates />} />
+            <Route path="gallery" element={<GalleryManager />} />
             <Route path="comments" element={<Comments />} />
           </Routes>
         </main>
